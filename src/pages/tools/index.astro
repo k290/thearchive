@@ -1,0 +1,45 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+
+const tools = (await getCollection('tools')).sort(
+	(a, b) => b.data.publishedDate.valueOf() - a.data.publishedDate.valueOf()
+);
+---
+
+<Layout title="Tools | My Website" description="Interactive tools and productized ideas.">
+	<section class="page-heading">
+		<p class="eyebrow">Builds</p>
+		<h1>Tools</h1>
+		<p>Publish a tool profile in `src/content/tools` to add it here.</p>
+	</section>
+
+	{
+		tools.length === 0 ? (
+			<p class="empty-state">No tools yet.</p>
+		) : (
+			<div class="stack-list">
+				{
+					tools.map((tool) => (
+						<article class="card">
+							<p class="meta">
+								<span class="status-pill">{tool.data.status}</span> {tool.data.category}
+							</p>
+							<h2>
+								<a href={`/tools/${tool.id}/`}>{tool.data.title}</a>
+							</h2>
+							<p>{tool.data.description}</p>
+							{
+								tool.data.tags.length > 0 && (
+									<ul class="tag-list" aria-label="Tool tags">
+										{tool.data.tags.map((tag) => <li>{tag}</li>)}
+									</ul>
+								)
+							}
+						</article>
+					))
+				}
+			</div>
+		)
+	}
+</Layout>

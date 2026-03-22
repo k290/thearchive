@@ -1,0 +1,43 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
+	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+---
+
+<Layout title="Blog | My Website" description="Posts and writing collected in one place.">
+	<section class="page-heading">
+		<p class="eyebrow">Writing</p>
+		<h1>Blog</h1>
+		<p>Publish markdown posts in `src/content/blog` and they appear here automatically.</p>
+	</section>
+
+	{
+		posts.length === 0 ? (
+			<p class="empty-state">No posts yet.</p>
+		) : (
+			<div class="stack-list">
+				{
+					posts.map((post) => (
+						<article class="card">
+							<p class="meta">{post.data.pubDate.toLocaleDateString()}</p>
+							<h2>
+								<a href={`/blog/${post.id}/`}>{post.data.title}</a>
+							</h2>
+							<p>{post.data.description}</p>
+							{
+								post.data.tags.length > 0 && (
+									<ul class="tag-list" aria-label="Post tags">
+										{post.data.tags.map((tag) => <li>{tag}</li>)}
+									</ul>
+								)
+							}
+						</article>
+					))
+				}
+			</div>
+		)
+	}
+</Layout>

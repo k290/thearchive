@@ -1,11 +1,82 @@
 ---
-import Welcome from '../components/Welcome.astro';
 import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+const posts = (await getCollection('blog', ({ data }) => !data.draft))
+	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+	.slice(0, 3);
+
+const featuredTools = (await getCollection('tools'))
+	.filter((tool) => tool.data.featured)
+	.sort((a, b) => b.data.publishedDate.valueOf() - a.data.publishedDate.valueOf())
+	.slice(0, 4);
 ---
 
-<Layout>
-	<Welcome />
+<Layout title="Home | My Website" description="Blog posts and practical tools in one Astro site.">
+	<section class="hero">
+		<p class="eyebrow">Astro Foundation</p>
+		<h1>One site for long-form writing and utility-driven tools.</h1>
+		<p>
+			This baseline is intentionally content-first, so we can map your Figma UI directly onto stable routes and
+			data structures.
+		</p>
+		<div class="hero-actions">
+			<a class="button" href="/blog/">Read Blog</a>
+			<a class="button button-secondary" href="/tools/">Explore Tools</a>
+		</div>
+	</section>
+
+	<section class="home-section">
+		<div class="section-header">
+			<h2>Latest Blog Posts</h2>
+			<a href="/blog/">See all posts</a>
+		</div>
+		{
+			posts.length === 0 ? (
+				<p class="empty-state">No blog entries yet. Add markdown files in `src/content/blog`.</p>
+			) : (
+				<div class="card-grid">
+					{
+						posts.map((post) => (
+							<article class="card">
+								<p class="meta">{post.data.pubDate.toLocaleDateString()}</p>
+								<h3>
+									<a href={`/blog/${post.id}/`}>{post.data.title}</a>
+								</h3>
+								<p>{post.data.description}</p>
+							</article>
+						))
+					}
+				</div>
+			)
+		}
+	</section>
+
+	<section class="home-section">
+		<div class="section-header">
+			<h2>Featured Tools</h2>
+			<a href="/tools/">See all tools</a>
+		</div>
+		{
+			featuredTools.length === 0 ? (
+				<p class="empty-state">No featured tools yet. Update entries in `src/content/tools`.</p>
+			) : (
+				<div class="card-grid">
+					{
+						featuredTools.map((tool) => (
+							<article class="card">
+								<p class="meta">
+									<span class="status-pill">{tool.data.status}</span> {tool.data.category}
+								</p>
+								<h3>
+									<a href={`/tools/${tool.id}/`}>{tool.data.title}</a>
+								</h3>
+								<p>{tool.data.description}</p>
+							</article>
+						))
+					}
+				</div>
+			)
+		}
+	</section>
 </Layout>

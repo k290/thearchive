@@ -1,46 +1,75 @@
-# Astro Starter Kit: Basics
+# My Website (Astro)
 
-```sh
-npm create astro@latest -- --template basics
-```
+This project is set up to host both:
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+- blog posts
+- tool pages for products/utilities you build
 
-## 🚀 Project Structure
+The current UI is a clean placeholder foundation that can be swapped to your Figma design system later.
 
-Inside of your Astro project, you'll see the following folders and files:
+## Project structure
 
 ```text
-/
-├── public/
-│   └── favicon.svg
-├── src
-│   ├── assets
-│   │   └── astro.svg
-│   ├── components
-│   │   └── Welcome.astro
-│   ├── layouts
-│   │   └── Layout.astro
-│   └── pages
-│       └── index.astro
-└── package.json
+src/
+├── content/
+│   ├── blog/
+│   └── tools/
+├── content.config.ts
+├── layouts/
+│   └── Layout.astro
+├── pages/
+│   ├── index.astro
+│   ├── blog/
+│   │   ├── index.astro
+│   │   └── [...slug].astro
+│   └── tools/
+│       ├── index.astro
+│       └── [...slug].astro
+└── styles/
+    └── site.css
 ```
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+## Content model
 
-## 🧞 Commands
+### Blog entries
 
-All commands are run from the root of the project, from a terminal:
+Add markdown files to `src/content/blog`.
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+Required frontmatter:
 
-## 👀 Want to learn more?
+- `title`
+- `description`
+- `pubDate`
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+Optional:
+
+- `updatedDate`
+- `draft`
+- `tags`
+
+### Tool entries
+
+Add markdown files to `src/content/tools`.
+
+Required frontmatter:
+
+- `title`
+- `description`
+- `category`
+- `publishedDate`
+
+Optional:
+
+- `updatedDate`
+- `status` (`live`, `beta`, `planned`, `archived`)
+- `featured`
+- `externalUrl`
+- `repoUrl`
+- `tags`
+
+## Commands
+
+- `npm install` install dependencies
+- `npm run dev` start local development server
+- `npm run build` build static site into `dist/`
+- `npm run preview` preview production build locally
