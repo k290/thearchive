@@ -23,7 +23,9 @@ export default defineConfig({
 		toHaveScreenshot: {
 			animations: 'disabled',
 			caret: 'hide',
-			maxDiffPixelRatio: 0.015
+			// CI chromium rasterization differs from local machines by ~2-3% on a few pages.
+			// Keep local strict; allow a narrow CI cushion above observed max drift.
+			maxDiffPixelRatio: isCI ? 0.035 : 0.015
 		}
 	},
 	use: {
