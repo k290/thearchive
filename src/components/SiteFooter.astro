@@ -10,7 +10,10 @@ const legalLinks = [
 
 <footer class="site-footer">
 	<div class="site-footer__inner">
-		<a class="site-footer__brand" href={withBase('/')}>THE ARCHIVE</a>
+		<a class="site-footer__brand" href={withBase('/')}>
+			<span>THE COGNITIVE</span>
+			<span>ARCHIVE</span>
+		</a>
 		<nav class="site-footer__links" aria-label="Legal">
 			{
 				legalLinks.map((item) => (
@@ -20,6 +23,6 @@ const legalLinks = [
 				))
 			}
 		</nav>
-		<p class="site-footer__copyright">© 2024 THE ARCHIVE. CURATED WITH INTENT.</p>
+		<p class="site-footer__copyright">© 2024 THE COGNITIVE ARCHIVE. CURATED WITH INTENT.</p>
 	</div>
 </footer>
