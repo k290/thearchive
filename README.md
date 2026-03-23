@@ -74,5 +74,8 @@ Optional:
 - `npm run check` run Astro type and `.astro` checks
 - `npm run test:unit` run Vitest unit/contract tests
 - `npm run test:e2e` run Playwright end-to-end tests
+- `npm run test:e2e:visual` run visual regression tests
+- `npm run test:e2e:update-snapshots` update visual baselines intentionally
+- `npm run test:e2e:responsive` run responsive layout matrix tests
 - `npm run build` build static site into `dist/`
 - `npm run preview` preview production build locally

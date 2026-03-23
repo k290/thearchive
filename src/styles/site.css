@@ -2953,7 +2953,20 @@ img {
 	}
 
 	.home-hero__title {
-		font-size: clamp(2.7rem, 16vw, 4.6rem);
+		font-size: clamp(1.9rem, 9.8vw, 2.6rem);
+		letter-spacing: 0.05em;
+		line-height: 0.95;
+		word-break: break-word;
+	}
+
+	.home-hero__title span {
+		display: block;
+		max-width: 100%;
+		white-space: normal;
+	}
+
+	.home-hero__title .is-secondary {
+		letter-spacing: 0.04em;
 	}
 
 	.home-hero__actions {
@@ -2990,8 +3003,16 @@ img {
 	}
 
 	.about-figma__masthead h1 {
-		font-size: clamp(2.8rem, 16vw, 4.2rem);
-		letter-spacing: 0.1em;
+		font-size: clamp(1.95rem, 10.5vw, 2.8rem);
+		letter-spacing: 0.06em;
+		line-height: 0.95;
+		word-break: break-word;
+	}
+
+	.about-figma__masthead h1 span {
+		display: block;
+		max-width: 100%;
+		white-space: normal;
 	}
 
 	.about-figma__mission {

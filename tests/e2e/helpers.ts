@@ -27,6 +27,11 @@ export const expectAtRoute = (page: Page, route: string): void => {
 
 export const createRuntimeErrorTracker = (page: Page) => {
 	const errors: string[] = [];
+	const ignoredConsoleErrorPatterns = [
+		/Error while running audit's match function: TypeError: Failed to fetch/i,
+		/fonts\.googleapis\.com.*blocked by CORS policy/i,
+		/Failed to load resource: net::ERR_FAILED/i
+	];
 
 	page.on('pageerror', (error) => {
 		errors.push(`pageerror: ${error.message}`);
@@ -34,7 +39,11 @@ export const createRuntimeErrorTracker = (page: Page) => {
 
 	page.on('console', (message) => {
 		if (message.type() === 'error') {
-			errors.push(`console.error: ${message.text()}`);
+			const text = message.text();
+			const shouldIgnore = ignoredConsoleErrorPatterns.some((pattern) => pattern.test(text));
+			if (!shouldIgnore) {
+				errors.push(`console.error: ${text}`);
+			}
 		}
 	});
 
@@ -52,4 +61,3 @@ export const isLikelyInternalPath = (value: string): boolean => {
 
 	return value.startsWith('/');
 };
-

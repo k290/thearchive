@@ -16,6 +16,9 @@
     "test:unit:watch": "vitest",
     "test:e2e": "playwright test --pass-with-no-tests",
     "test:e2e:headed": "playwright test --headed --pass-with-no-tests",
+    "test:e2e:visual": "playwright test tests/e2e/visual-regression.spec.ts",
+    "test:e2e:responsive": "playwright test tests/e2e/responsive-layout.spec.ts",
+    "test:e2e:update-snapshots": "playwright test tests/e2e/visual-regression.spec.ts --update-snapshots",
     "test:e2e:install": "playwright install --with-deps chromium"
   },
   "dependencies": {
