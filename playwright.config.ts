@@ -23,7 +23,9 @@ export default defineConfig({
 		toHaveScreenshot: {
 			animations: 'disabled',
 			caret: 'hide',
-			maxDiffPixelRatio: 0.015
+			// CI runners can render web fonts and anti-aliasing differently than local machines.
+			// Use a slightly wider threshold in CI to avoid false negatives while keeping local checks strict.
+			maxDiffPixelRatio: isCI ? 0.05 : 0.015
 		}
 	},
 	use: {
