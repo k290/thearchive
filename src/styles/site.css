@@ -421,6 +421,392 @@ img {
 	color: var(--archive-text-strong);
 }
 
+.page-main > .home-figma {
+	max-width: none;
+	width: 100%;
+}
+
+.home-figma {
+	position: relative;
+}
+
+.home-hero {
+	align-items: start;
+	display: grid;
+	gap: 96px;
+	grid-template-columns: minmax(0, 1fr) 426px;
+	margin: 0 auto;
+	max-width: var(--content-width);
+	min-height: 881px;
+	padding-bottom: 364px;
+}
+
+.home-hero__content {
+	max-width: 720px;
+}
+
+.home-hero__eyebrow {
+	color: var(--archive-muted);
+	font-family: var(--font-ui);
+	font-size: 12px;
+	letter-spacing: 0.4em;
+	line-height: 16px;
+	margin: 0;
+	text-transform: uppercase;
+}
+
+.home-hero__title {
+	color: var(--archive-text);
+	display: flex;
+	flex-direction: column;
+	font-family: var(--font-display);
+	font-size: clamp(3rem, 8vw, 6rem);
+	font-style: normal;
+	font-weight: 300;
+	letter-spacing: 0.2em;
+	line-height: 1;
+	margin: 48px 0 0;
+	text-transform: uppercase;
+}
+
+.home-hero__title .is-italic {
+	font-style: italic;
+	letter-spacing: 0.03em;
+	text-transform: none;
+}
+
+.home-hero__lede {
+	color: var(--archive-muted);
+	font-family: var(--font-copy);
+	font-size: clamp(1.15rem, 2.3vw, 1.5rem);
+	font-style: italic;
+	line-height: 1.625;
+	margin: 32px 0 0;
+	max-width: 576px;
+}
+
+.home-hero__actions {
+	align-items: center;
+	display: flex;
+	gap: 48px;
+	margin-top: 32px;
+	padding-top: 32px;
+}
+
+.home-hero__actions .button {
+	padding-inline: 32px;
+}
+
+.home-hero__divider {
+	background: var(--archive-border);
+	height: 1px;
+	opacity: 0.3;
+	width: 96px;
+}
+
+.home-hero__figure {
+	background: #f5f4ed;
+	margin: 91px 0 0;
+	opacity: 0.1;
+}
+
+.home-hero__figure img {
+	filter: grayscale(1);
+	height: auto;
+	width: 100%;
+}
+
+.home-scroll-track {
+	align-items: center;
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+	left: 24px;
+	opacity: 0.3;
+	position: absolute;
+	top: 1684px;
+}
+
+.home-scroll-track p {
+	color: var(--archive-text);
+	font-family: var(--font-ui);
+	font-size: 8px;
+	letter-spacing: 0.1em;
+	line-height: 12px;
+	margin: 0;
+	text-transform: uppercase;
+}
+
+.home-scroll-track__line {
+	background: var(--archive-border);
+	height: 128px;
+	position: relative;
+	width: 1px;
+}
+
+.home-scroll-track__progress {
+	background: var(--archive-action);
+	height: 64px;
+	left: 0;
+	position: absolute;
+	top: 0;
+	width: 1px;
+}
+
+.home-features {
+	display: grid;
+	gap: 64px;
+	grid-template-columns: repeat(12, minmax(0, 1fr));
+	margin: 0 auto;
+	max-width: var(--content-width);
+}
+
+.home-features__primary {
+	grid-column: 1 / span 7;
+}
+
+.home-features__primary-image {
+	background: #f5f4ed;
+	margin: 0;
+}
+
+.home-features__primary-image img {
+	display: block;
+	height: auto;
+	opacity: 0.9;
+	width: 100%;
+}
+
+.home-features__primary-content {
+	display: grid;
+	gap: 16px;
+	margin-top: 32px;
+	max-width: 448px;
+}
+
+.home-features__meta-row {
+	align-items: baseline;
+	display: flex;
+	justify-content: space-between;
+}
+
+.home-features__meta-row p,
+.home-features__meta {
+	color: var(--archive-muted);
+	font-family: var(--font-ui);
+	font-size: 10px;
+	letter-spacing: 0.1em;
+	line-height: 15px;
+	margin: 0;
+	text-transform: uppercase;
+}
+
+.home-features__meta-row p:last-child {
+	color: var(--archive-border);
+}
+
+.home-features__primary h2,
+.home-features__secondary h3,
+.home-features__tool h3 {
+	margin: 0;
+}
+
+.home-features__primary h2 a,
+.home-features__secondary h3 a,
+.home-features__tool h3 a {
+	color: var(--archive-text);
+	font-family: var(--font-display);
+	font-style: normal;
+	font-weight: 400;
+	text-decoration: none;
+}
+
+.home-features__primary h2 a {
+	display: block;
+	font-size: clamp(1.8rem, 3.2vw, 3rem);
+	line-height: 1.375;
+}
+
+.home-features__primary p {
+	color: var(--archive-muted);
+	font-family: var(--font-copy);
+	font-size: 18px;
+	line-height: 1.625;
+	margin: 0;
+}
+
+.home-features__link {
+	align-self: start;
+	border-bottom: 1px solid var(--archive-border);
+	color: var(--archive-text);
+	font-family: var(--font-ui);
+	font-size: 10px;
+	font-weight: 500;
+	letter-spacing: 0.2em;
+	line-height: 15px;
+	padding-bottom: 1px;
+	text-decoration: none;
+	text-transform: uppercase;
+}
+
+.home-features__right {
+	display: grid;
+	gap: 96px;
+	grid-column: 8 / span 5;
+	padding-top: 80px;
+}
+
+.home-features__secondary-image {
+	background: #efeee6;
+	margin: 0;
+}
+
+.home-features__secondary-image img {
+	filter: grayscale(1);
+	height: auto;
+	opacity: 0.8;
+	width: 100%;
+}
+
+.home-features__secondary h3 a {
+	display: block;
+	font-size: clamp(1.35rem, 2vw, 2rem);
+	line-height: 1.4;
+	margin-top: 12px;
+}
+
+.home-features__secondary-divider {
+	background: var(--archive-border);
+	height: 1px;
+	margin-top: 16px;
+	opacity: 0.2;
+	width: 48px;
+}
+
+.home-features__tool {
+	background: var(--archive-surface-accent);
+	padding: 40px;
+}
+
+.home-features__tool h3 a {
+	display: block;
+	font-size: clamp(1.45rem, 2vw, 2rem);
+	font-style: italic;
+	line-height: 1.33;
+	margin-top: 16px;
+}
+
+.home-features__tool p {
+	color: var(--archive-muted);
+	font-family: var(--font-copy);
+	font-size: 16px;
+	font-style: italic;
+	line-height: 1.5;
+	margin: 16px 0 0;
+}
+
+.home-features__tool-footer {
+	align-items: center;
+	display: flex;
+	justify-content: space-between;
+	margin-top: 48px;
+}
+
+.home-features__tool-footer a {
+	color: var(--archive-text);
+	font-family: var(--font-ui);
+	font-size: 10px;
+	letter-spacing: 0.1em;
+	line-height: 15px;
+	text-decoration: none;
+	text-transform: uppercase;
+}
+
+.home-psychology {
+	background: #f5f4ed;
+	margin-top: 128px;
+	padding: 160px 48px;
+}
+
+.home-psychology__inner {
+	display: grid;
+	gap: 96px;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	margin: 0 auto;
+	max-width: var(--content-width);
+}
+
+.home-psychology__content {
+	align-self: center;
+}
+
+.home-psychology__content h2 {
+	color: var(--archive-text);
+	display: flex;
+	flex-direction: column;
+	font-family: var(--font-display);
+	font-size: clamp(2.25rem, 5vw, 3rem);
+	font-weight: 400;
+	letter-spacing: 0.025em;
+	line-height: 1.25;
+	margin: 0;
+}
+
+.home-psychology__content h2 span {
+	font-style: italic;
+	font-weight: 300;
+}
+
+.home-psychology__content p {
+	color: var(--archive-muted);
+	font-family: var(--font-copy);
+	font-size: 20px;
+	line-height: 1.625;
+	margin: 48px 0 0;
+	max-width: 448px;
+}
+
+.home-psychology__content ol {
+	display: grid;
+	gap: 32px;
+	list-style: none;
+	margin: 48px 0 0;
+	padding: 0;
+}
+
+.home-psychology__content li {
+	align-items: baseline;
+	display: flex;
+	gap: 24px;
+}
+
+.home-psychology__content li span:first-child {
+	color: #797c73;
+	font-family: var(--font-ui);
+	font-size: 12px;
+	line-height: 16px;
+	min-width: 1.25rem;
+}
+
+.home-psychology__content li span:last-child {
+	color: var(--archive-text);
+	font-family: var(--font-display);
+	font-size: clamp(1.4rem, 2.8vw, 2rem);
+	line-height: 1.35;
+}
+
+.home-psychology__figure {
+	background: #fbf9f4;
+	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+	margin: 0;
+	padding: 16px;
+}
+
+.home-psychology__figure img {
+	height: auto;
+	width: 100%;
+}
+
 @media (max-width: 1100px) {
 	:root {
 		--gutter: 24px;
@@ -438,6 +824,46 @@ img {
 
 	.site-footer__links {
 		gap: 1rem;
+	}
+
+	.home-hero {
+		gap: 40px;
+		grid-template-columns: minmax(0, 1fr);
+		min-height: auto;
+		padding-bottom: 80px;
+	}
+
+	.home-hero__figure {
+		margin-top: 0;
+		max-width: 426px;
+	}
+
+	.home-scroll-track {
+		display: none;
+	}
+
+	.home-features {
+		gap: 48px;
+		grid-template-columns: minmax(0, 1fr);
+	}
+
+	.home-features__primary,
+	.home-features__right {
+		grid-column: 1;
+	}
+
+	.home-features__right {
+		padding-top: 0;
+	}
+
+	.home-psychology {
+		margin-top: 80px;
+		padding: 80px 24px;
+	}
+
+	.home-psychology__inner {
+		gap: 48px;
+		grid-template-columns: minmax(0, 1fr);
 	}
 }
 
@@ -467,5 +893,33 @@ img {
 
 	.site-footer__copyright {
 		white-space: normal;
+	}
+
+	.home-hero__title {
+		font-size: clamp(2.7rem, 16vw, 4.6rem);
+	}
+
+	.home-hero__actions {
+		gap: 20px;
+	}
+
+	.home-features__primary h2 a,
+	.home-features__secondary h3 a,
+	.home-features__tool h3 a {
+		font-size: clamp(1.65rem, 8vw, 2.4rem);
+	}
+
+	.home-psychology__content p {
+		font-size: 1.1rem;
+	}
+
+	.home-psychology__content li {
+		align-items: flex-start;
+		flex-direction: column;
+		gap: 8px;
+	}
+
+	.home-psychology__content li span:last-child {
+		font-size: clamp(1.4rem, 7vw, 2.1rem);
 	}
 }

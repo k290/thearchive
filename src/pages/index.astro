@@ -1,82 +1,142 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { getCollection } from 'astro:content';
-
-const posts = (await getCollection('blog', ({ data }) => !data.draft))
-	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
-	.slice(0, 3);
-
-const featuredTools = (await getCollection('tools'))
-	.filter((tool) => tool.data.featured)
-	.sort((a, b) => b.data.publishedDate.valueOf() - a.data.publishedDate.valueOf())
-	.slice(0, 4);
 ---
 
-<Layout title="Home | My Website" description="Blog posts and practical tools in one Astro site.">
-	<section class="hero">
-		<p class="eyebrow">Astro Foundation</p>
-		<h1>One site for long-form writing and utility-driven tools.</h1>
-		<p>
-			This baseline is intentionally content-first, so we can map your Figma UI directly onto stable routes and
-			data structures.
-		</p>
-		<div class="hero-actions">
-			<a class="button" href="/blog/">Read Blog</a>
-			<a class="button button-secondary" href="/tools/">Explore Tools</a>
-		</div>
-	</section>
-
-	<section class="home-section">
-		<div class="section-header">
-			<h2>Latest Blog Posts</h2>
-			<a href="/blog/">See all posts</a>
-		</div>
-		{
-			posts.length === 0 ? (
-				<p class="empty-state">No blog entries yet. Add markdown files in `src/content/blog`.</p>
-			) : (
-				<div class="card-grid">
-					{
-						posts.map((post) => (
-							<article class="card">
-								<p class="meta">{post.data.pubDate.toLocaleDateString()}</p>
-								<h3>
-									<a href={`/blog/${post.id}/`}>{post.data.title}</a>
-								</h3>
-								<p>{post.data.description}</p>
-							</article>
-						))
-					}
+<Layout
+	title="Home | The Archive"
+	description="A curated space for the curious mind. Exploring the intersections of ancient philosophy, modern psychology, and the velocity of technology."
+>
+	<div class="home-figma">
+		<section class="home-hero">
+			<div class="home-hero__content">
+				<p class="home-hero__eyebrow">Volume I — Editorial</p>
+				<h1 class="home-hero__title">
+					<span>THE</span>
+					<span class="is-italic">ARCHIVE</span>
+				</h1>
+				<p class="home-hero__lede">
+					A curated space for the curious mind. Exploring the intersections of ancient philosophy, modern
+					psychology, and the velocity of technology.
+				</p>
+				<div class="home-hero__actions">
+					<a class="button" href="/blog/">Begin Exploration</a>
+					<div class="home-hero__divider" aria-hidden="true"></div>
 				</div>
-			)
-		}
-	</section>
+			</div>
+			<figure class="home-hero__figure">
+				<img
+					src="/images/home/hero-book.jpg"
+					alt=""
+					width="427"
+					height="427"
+					loading="eager"
+					decoding="async"
+				/>
+			</figure>
+		</section>
 
-	<section class="home-section">
-		<div class="section-header">
-			<h2>Featured Tools</h2>
-			<a href="/tools/">See all tools</a>
+		<div class="home-scroll-track" aria-hidden="true">
+			<p>Scroll</p>
+			<div class="home-scroll-track__line">
+				<span class="home-scroll-track__progress"></span>
+			</div>
 		</div>
-		{
-			featuredTools.length === 0 ? (
-				<p class="empty-state">No featured tools yet. Update entries in `src/content/tools`.</p>
-			) : (
-				<div class="card-grid">
-					{
-						featuredTools.map((tool) => (
-							<article class="card">
-								<p class="meta">
-									<span class="status-pill">{tool.data.status}</span> {tool.data.category}
-								</p>
-								<h3>
-									<a href={`/tools/${tool.id}/`}>{tool.data.title}</a>
-								</h3>
-								<p>{tool.data.description}</p>
-							</article>
-						))
-					}
+
+		<section class="home-features">
+			<article class="home-features__primary">
+				<figure class="home-features__primary-image">
+					<img
+						src="/images/home/feature-philosophy.jpg"
+						alt=""
+						width="664"
+						height="415"
+						loading="lazy"
+						decoding="async"
+					/>
+				</figure>
+				<div class="home-features__primary-content">
+					<div class="home-features__meta-row">
+						<p>Philosophy</p>
+						<p>01.04.24</p>
+					</div>
+					<h2>
+						<a href="/blog/">The Stoic Response to the Digital Acceleration</a>
+					</h2>
+					<p>How ancient stillness provides the ultimate tool for navigating the relentless stream of modern information.</p>
+					<a class="home-features__link" href="/blog/">Read Folio</a>
 				</div>
-			)
-		}
-	</section>
+			</article>
+
+			<div class="home-features__right">
+				<article class="home-features__secondary">
+					<figure class="home-features__secondary-image">
+						<img
+							src="/images/home/feature-technology.jpg"
+							alt=""
+							width="456"
+							height="456"
+							loading="lazy"
+							decoding="async"
+						/>
+					</figure>
+					<p class="home-features__meta">Technology</p>
+					<h3>
+						<a href="/blog/">Ethics of Autonomous Intelligence</a>
+					</h3>
+					<div class="home-features__secondary-divider" aria-hidden="true"></div>
+				</article>
+
+				<article class="home-features__tool">
+					<p class="home-features__meta">Tools</p>
+					<h3>
+						<a href="/tools/">The Cognitive Workbench</a>
+					</h3>
+					<p>A repository of mental models and frameworks for structural thinking in an unstructured world.</p>
+					<div class="home-features__tool-footer">
+						<img src="/images/home/repository-mark.svg" alt="" width="13" height="22" loading="lazy" />
+						<a href="/tools/">Access Repository</a>
+					</div>
+				</article>
+			</div>
+		</section>
+
+		<section class="home-psychology">
+			<div class="home-psychology__inner">
+				<div class="home-psychology__content">
+					<h2>
+						The Psychology of
+						<span>Curation</span>
+					</h2>
+					<p>
+						In an era of infinite abundance, the act of choosing is the ultimate form of rebellion. We explore
+						why the human psyche craves order amidst digital chaos.
+					</p>
+					<ol>
+						<li>
+							<span>01</span>
+							<span>The Paradox of Choice</span>
+						</li>
+						<li>
+							<span>02</span>
+							<span>Visual Serenity &amp; Cognitive Load</span>
+						</li>
+						<li>
+							<span>03</span>
+							<span>The Digital Monasticism</span>
+						</li>
+					</ol>
+				</div>
+				<figure class="home-psychology__figure">
+					<img
+						src="/images/home/psychology-light.jpg"
+						alt=""
+						width="512"
+						height="544"
+						loading="lazy"
+						decoding="async"
+					/>
+				</figure>
+			</div>
+		</section>
+	</div>
 </Layout>
