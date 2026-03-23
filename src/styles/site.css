@@ -989,6 +989,7 @@ img {
 	line-height: 15px;
 	margin-top: auto;
 	padding: 0 24px;
+	text-decoration: none;
 	text-transform: uppercase;
 	width: max-content;
 }
@@ -1706,7 +1707,7 @@ img {
 	border: 1px solid rgba(177, 179, 169, 0.24);
 	display: grid;
 	gap: 16px;
-	grid-template-columns: repeat(3, minmax(0, 1fr));
+	grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
 	margin-bottom: 24px;
 	padding: 24px;
 }

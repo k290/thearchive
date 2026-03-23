@@ -1,54 +1,74 @@
 ---
+import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 import { withBase } from '../../utils/withBase';
 
-const toolsDirectoryCards = [
-	{
+const figmaDirectoryOrder = [
+	'semantic-weaver',
+	'folio-structurer',
+	'tonal-extractor',
+	'metadata-vault',
+	'contextual-reader',
+	'source-mapper'
+];
+
+const figmaFallbacks = {
+	'semantic-weaver': {
 		title: 'Semantic Weaver',
-		slug: 'semantic-weaver',
 		version: 'v. 2.4',
 		description:
 			'Extract thematic threads from expansive text collections using nuanced contextual analysis.',
-		icon: withBase('/images/tools/icon-semantic.svg')
+		icon: 'icon-semantic.svg'
 	},
-	{
+	'folio-structurer': {
 		title: 'Folio Structurer',
-		slug: 'folio-structurer',
 		version: 'v. 1.0',
 		description:
 			'Organize disparate digital artifacts into cohesive, paginated narratives for publication.',
-		icon: withBase('/images/tools/icon-folio.svg')
+		icon: 'icon-folio.svg'
 	},
-	{
+	'tonal-extractor': {
 		title: 'Tonal Extractor',
-		slug: 'tonal-extractor',
 		version: 'Beta',
 		description:
 			'Translate visual atmospheres into structured hex systems and stylistic metadata.',
-		icon: withBase('/images/tools/icon-tonal.svg')
+		icon: 'icon-tonal.svg'
 	},
-	{
+	'metadata-vault': {
 		title: 'Metadata Vault',
-		slug: 'metadata-vault',
 		version: 'v. 3.1',
 		description: 'A secure, immutable storage solution for sensitive research data and primary sources.',
-		icon: withBase('/images/tools/icon-metadata.svg')
+		icon: 'icon-metadata.svg'
 	},
-	{
+	'contextual-reader': {
 		title: 'Contextual Reader',
-		slug: 'contextual-reader',
 		version: 'v. 0.9',
 		description: 'Distraction-free environment for analyzing deep-layered textual compositions.',
-		icon: withBase('/images/tools/icon-contextual.svg')
+		icon: 'icon-contextual.svg'
 	},
-	{
+	'source-mapper': {
 		title: 'Source Mapper',
-		slug: 'source-mapper',
 		version: 'Public',
 		description: 'Visualize the interconnected web of citations and references within your library.',
-		icon: withBase('/images/tools/icon-source.svg')
+		icon: 'icon-source.svg'
 	}
-];
+};
+
+const tools = await getCollection('tools');
+const toolsById = new Map(tools.map((tool) => [tool.id, tool]));
+
+const toolsDirectoryCards = figmaDirectoryOrder.map((slug) => {
+	const entry = toolsById.get(slug);
+	const fallback = figmaFallbacks[slug as keyof typeof figmaFallbacks];
+
+	return {
+		slug,
+		title: entry?.data.title ?? fallback.title,
+		version: entry?.data.version ?? fallback.version,
+		description: entry?.data.description ?? fallback.description,
+		icon: withBase(`/images/tools/${entry?.data.icon ?? fallback.icon}`)
+	};
+});
 ---
 
 <Layout

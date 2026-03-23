@@ -4,6 +4,8 @@ description: "Extract thematic threads from expansive text collections using nua
 category: "Research Intelligence"
 publishedDate: 2026-03-22
 status: "live"
+version: "v. 2.4"
+icon: "icon-semantic.svg"
 featured: true
 externalUrl: "https://example.com/semantic-weaver"
 repoUrl: "https://github.com/example/semantic-weaver"

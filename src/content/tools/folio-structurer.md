@@ -4,6 +4,8 @@ description: "Organize disparate digital artifacts into cohesive, paginated narr
 category: "Editorial Systems"
 publishedDate: 2026-03-21
 status: "beta"
+version: "v. 1.0"
+icon: "icon-folio.svg"
 featured: true
 externalUrl: "https://example.com/folio-structurer"
 repoUrl: "https://github.com/example/folio-structurer"

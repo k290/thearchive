@@ -4,6 +4,8 @@ description: "Translate visual atmospheres into structured hex systems and styli
 category: "Visual Systems"
 publishedDate: 2026-03-20
 status: "beta"
+version: "Beta"
+icon: "icon-tonal.svg"
 featured: false
 externalUrl: "https://example.com/tonal-extractor"
 repoUrl: "https://github.com/example/tonal-extractor"

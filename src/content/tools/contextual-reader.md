@@ -4,6 +4,8 @@ description: "Distraction-free environment for analyzing deep-layered textual co
 category: "Deep Reading"
 publishedDate: 2026-03-18
 status: "planned"
+version: "v. 0.9"
+icon: "icon-contextual.svg"
 featured: false
 tags: ["reading", "annotation", "focus"]
 ---

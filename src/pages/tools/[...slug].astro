@@ -39,16 +39,7 @@ const statusLabelMap: Record<CollectionEntry<'tools'>['data']['status'], string>
 	archived: 'Archived'
 };
 
-const iconByToolId: Record<string, string> = {
-	'campaign-message-tester': withBase('/images/tools/icon-semantic.svg'),
-	'legislation-tracker': withBase('/images/tools/icon-metadata.svg'),
-	'semantic-weaver': withBase('/images/tools/icon-semantic.svg'),
-	'folio-structurer': withBase('/images/tools/icon-folio.svg'),
-	'tonal-extractor': withBase('/images/tools/icon-tonal.svg'),
-	'metadata-vault': withBase('/images/tools/icon-metadata.svg'),
-	'contextual-reader': withBase('/images/tools/icon-contextual.svg'),
-	'source-mapper': withBase('/images/tools/icon-source.svg')
-};
+const iconPathFor = (icon: string | undefined) => withBase(`/images/tools/${icon ?? 'icon-folio.svg'}`);
 
 const relatedEntries = (await getCollection('tools'))
 	.filter((candidate) => candidate.id !== entry.id)
@@ -80,7 +71,7 @@ const relatedCards: RelatedToolCard[] = [0, 1].map((index) => {
 		href: withBase(`/tools/${candidate.id}/`),
 		title: candidate.data.title,
 		category: candidate.data.category,
-		icon: iconByToolId[candidate.id] ?? withBase('/images/tools/icon-folio.svg')
+		icon: iconPathFor(candidate.data.icon)
 	};
 });
 
@@ -142,6 +133,14 @@ const primaryFooterAction = entry.data.externalUrl
 
 		<section class="article-detail__body">
 			<div class="tool-detail__quick-facts" aria-label="Tool metadata">
+				{
+					entry.data.version && (
+						<p>
+							<span>Version</span>
+							<strong>{entry.data.version}</strong>
+						</p>
+					)
+				}
 				<p>
 					<span>Status</span>
 					<strong>{statusLabelMap[entry.data.status]}</strong>

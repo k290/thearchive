@@ -4,6 +4,8 @@ description: "A secure, immutable storage solution for sensitive research data a
 category: "Knowledge Infrastructure"
 publishedDate: 2026-03-19
 status: "live"
+version: "v. 3.1"
+icon: "icon-metadata.svg"
 featured: true
 externalUrl: "https://example.com/metadata-vault"
 repoUrl: "https://github.com/example/metadata-vault"

@@ -22,6 +22,8 @@ const tools = defineCollection({
 		publishedDate: z.coerce.date(),
 		updatedDate: z.coerce.date().optional(),
 		status: z.enum(['live', 'beta', 'planned', 'archived']).default('planned'),
+		version: z.string().optional(),
+		icon: z.string().optional(),
 		featured: z.boolean().default(false),
 		externalUrl: z.string().url().optional(),
 		repoUrl: z.string().url().optional(),

@@ -4,6 +4,8 @@ description: "Visualize the interconnected web of citations and references withi
 category: "Discovery Graphs"
 publishedDate: 2026-03-17
 status: "live"
+version: "Public"
+icon: "icon-source.svg"
 featured: true
 externalUrl: "https://example.com/source-mapper"
 repoUrl: "https://github.com/example/source-mapper"

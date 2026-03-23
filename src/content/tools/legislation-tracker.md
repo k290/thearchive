@@ -4,6 +4,8 @@ description: "Monitors bill progress with timeline summaries and status filters.
 category: "Policy Intelligence"
 publishedDate: 2026-03-15
 status: "beta"
+version: "v. 3.1"
+icon: "icon-metadata.svg"
 featured: true
 externalUrl: "https://example.com/legislation-tracker"
 repoUrl: "https://github.com/example/legislation-tracker"
