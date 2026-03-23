@@ -2275,14 +2275,18 @@ img {
 
 .sw-hero {
 	background: #f5f4ed;
+	isolation: isolate;
 	min-height: 400px;
 	overflow: hidden;
 	position: relative;
 }
 
 .sw-hero img {
+	display: block;
 	height: 400px;
+	mix-blend-mode: multiply;
 	object-fit: cover;
+	opacity: 0.4;
 	width: 100%;
 }
 
@@ -2297,7 +2301,7 @@ img {
 }
 
 .sw-hero__line {
-	background: rgba(99, 93, 87, 0.35);
+	background: rgba(99, 93, 87, 0.4);
 	height: 96px;
 	width: 1px;
 }
