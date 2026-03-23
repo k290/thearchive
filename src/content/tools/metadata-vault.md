@@ -7,7 +7,7 @@ status: "live"
 version: "v. 3.1"
 icon: "icon-metadata.svg"
 featured: true
-externalUrl: "https://example.com/metadata-vault"
+externalUrl: "#"
 repoUrl: "https://github.com/example/metadata-vault"
 tags: ["metadata", "storage", "governance"]
 ---

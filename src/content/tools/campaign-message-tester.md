@@ -7,7 +7,7 @@ status: "live"
 version: "v. 2.4"
 icon: "icon-semantic.svg"
 featured: true
-externalUrl: "https://example.com/message-tester"
+externalUrl: "#"
 repoUrl: "https://github.com/example/message-tester"
 tags: ["campaigns", "messaging", "testing"]
 ---

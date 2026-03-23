@@ -25,7 +25,7 @@ const tools = defineCollection({
 		version: z.string().optional(),
 		icon: z.string().optional(),
 		featured: z.boolean().default(false),
-		externalUrl: z.string().url().optional(),
+		externalUrl: z.union([z.string().url(), z.literal('#')]).optional(),
 		repoUrl: z.string().url().optional(),
 		tags: z.array(z.string()).default([])
 	})

@@ -7,7 +7,7 @@ status: "beta"
 version: "v. 3.1"
 icon: "icon-metadata.svg"
 featured: true
-externalUrl: "https://example.com/legislation-tracker"
+externalUrl: "#"
 repoUrl: "https://github.com/example/legislation-tracker"
 tags: ["policy", "tracking", "analytics"]
 ---

@@ -80,145 +80,309 @@ const primaryFooterAction = entry.data.externalUrl
 	: entry.data.repoUrl
 		? { href: entry.data.repoUrl, label: 'View Source', external: true }
 		: { href: withBase('/tools/'), label: 'Browse Tools', external: false };
+
+const isSemanticWeaver = entry.id === 'semantic-weaver';
+const semanticLaunchHref = entry.data.externalUrl ?? withBase('/tools/');
+const semanticLaunchExternal = Boolean(entry.data.externalUrl);
 ---
 
 <Layout title={`${entry.data.title} | The Cognitive Archive`} description={entry.data.description}>
-	<div class="article-detail tool-detail">
-		<div class="article-detail__scroll-track" aria-hidden="true">
-			<p>Reading</p>
-			<div>
-				<span></span>
-			</div>
-		</div>
+	{
+		isSemanticWeaver ? (
+			<section class="semantic-weaver-detail" aria-labelledby="sw-title">
+				<a class="sw-back-link" href={withBase('/tools/')}>
+					<img src={withBase('/images/tools/semantic-weaver/icon-back.svg')} alt="" width="9" height="9" loading="lazy" />
+					<span>Back to Tools</span>
+				</a>
 
-		<header class="article-detail__header">
-			<p class="article-detail__meta">
-				<span>{entry.data.category}</span>
-				<span aria-hidden="true">•</span>
-				<span>{formatDate(entry.data.publishedDate)}</span>
-			</p>
-			<h1>{entry.data.title}</h1>
-			<p class="article-detail__lede">{entry.data.description}</p>
-			<div class="tool-detail__action-row">
-				{
-					entry.data.externalUrl && (
-						<a class="button" href={entry.data.externalUrl} target="_blank" rel="noreferrer">
-							Open Tool
-						</a>
-					)
-				}
-				{
-					entry.data.repoUrl && (
-						<a class="button button-secondary" href={entry.data.repoUrl} target="_blank" rel="noreferrer">
-							View Source
-						</a>
-					)
-				}
-			</div>
-		</header>
+				<header class="sw-header">
+					<div class="sw-heading">
+						<h1 id="sw-title">
+							<span>Semantic</span>
+							<span>Weaver</span>
+						</h1>
+						<p>A digital loom for the extraction of latent thematic threads within complex prose.</p>
+					</div>
+					<div class="sw-reference">
+						<p>Tool Reference</p>
+						<p>ARC-V.01 // SEMANTIC-W</p>
+					</div>
+				</header>
 
-		<section class="article-detail__hero">
-			<figure>
-				<img
-					src={withBase('/images/tools/secondary-image.png')}
-					alt="Quiet workspace composition from the tools collection."
-					width="1104"
-					height="473"
-					loading="eager"
-					decoding="async"
-				/>
-			</figure>
-			<p>Collection render from The Cognitive Archive tools atelier</p>
-		</section>
-
-		<section class="article-detail__body">
-			<div class="tool-detail__quick-facts" aria-label="Tool metadata">
-				{
-					entry.data.version && (
-						<p>
-							<span>Version</span>
-							<strong>{entry.data.version}</strong>
-						</p>
-					)
-				}
-				<p>
-					<span>Status</span>
-					<strong>{statusLabelMap[entry.data.status]}</strong>
-				</p>
-				<p>
-					<span>Category</span>
-					<strong>{entry.data.category}</strong>
-				</p>
-				<p>
-					<span>Published</span>
-					<strong>{formatDate(entry.data.publishedDate)}</strong>
-				</p>
-			</div>
-
-			{
-				entry.data.tags.length > 0 && (
-					<ul class="tool-detail__tags" aria-label="Tool tags">
-						{entry.data.tags.map((tag) => <li>{tag}</li>)}
-					</ul>
-				)
-			}
-
-			<div class="article-detail__prose">
-				<Content />
-			</div>
-
-			<aside class="article-detail__quote">
-				<blockquote>
-					“Quiet instruments create room for careful thought before decisive action.”
-				</blockquote>
-				<p>— The Cognitive Archive Principle</p>
-			</aside>
-
-			<footer class="article-detail__author">
-				<div class="article-detail__author-meta">
+				<section class="sw-hero" aria-label="Interweaving logic and intuition">
 					<img
-						src={withBase('/images/blog/article-author.jpg')}
+						src={withBase('/images/tools/semantic-weaver/hero-threads.jpg')}
 						alt=""
-						width="48"
-						height="48"
+						width="1344"
+						height="400"
+						loading="eager"
+						decoding="async"
+					/>
+					<div class="sw-hero__overlay">
+						<div class="sw-hero__line" aria-hidden="true"></div>
+						<p>Interweaving Logic &amp; Intuition</p>
+					</div>
+				</section>
+
+				<section class="sw-workspace" aria-label="Semantic Weaver workspace">
+					<div class="sw-input-panel">
+						<p class="sw-overline">Input Manuscript</p>
+						<div class="sw-input-panel__field" aria-label="Input manuscript placeholder">
+							<p>Paste your text here to begin the weaving process...</p>
+						</div>
+						<div class="sw-input-panel__footer">
+							<div class="sw-input-panel__controls">
+								<button type="button">
+									<img
+										src={withBase('/images/tools/semantic-weaver/icon-parameters.svg')}
+										alt=""
+										width="13"
+										height="13"
+										loading="lazy"
+									/>
+									<span>Parameters</span>
+								</button>
+								<button type="button">
+									<img
+										src={withBase('/images/tools/semantic-weaver/icon-upload.svg')}
+										alt=""
+										width="8"
+										height="13"
+										loading="lazy"
+									/>
+									<span>Upload</span>
+								</button>
+							</div>
+							<button type="button" class="sw-process-button">Process Threads</button>
+						</div>
+					</div>
+
+					<aside class="sw-methodology" aria-label="Tool methodology">
+						<h2>Tool Methodology</h2>
+						<p>
+							The Semantic Weaver operates on the principle of <em>Linguistic Topology</em>. Rather than
+							simple keyword extraction, it identifies the gravitational centers of meaning, the clusters
+							where syntax and sentiment converge to form recurring motifs.
+						</p>
+						<p>
+							By applying a proprietary recursive analysis, the tool maps the “texture” of the prose,
+							surfacing subtle philosophical undercurrents that often remain invisible during a primary
+							reading. It is designed for the scholar who seeks to uncover the skeleton of an argument
+							or the soul of a narrative.
+						</p>
+						<div class="sw-methodology__meta">
+							<div>
+								<p>Algorithm</p>
+								<p>Recursive Motif Mapping</p>
+							</div>
+							<div>
+								<p>Precision</p>
+								<p>Academic Grade (α-0.94)</p>
+							</div>
+						</div>
+					</aside>
+				</section>
+
+				<section class="sw-case-study" aria-labelledby="sw-case-study-title">
+					<header class="sw-case-study__header">
+						<h2 id="sw-case-study-title">Case Study</h2>
+						<div class="sw-case-study__divider" aria-hidden="true"></div>
+						<p>Exhibit A-01</p>
+					</header>
+					<div class="sw-case-study__grid">
+						<article>
+							<p class="sw-overline">Raw Text (Proust Selection)</p>
+							<blockquote>
+								“No sooner had the warm liquid mixed with the crumbs touched my palate than a shudder ran
+								through me and I stopped, intent upon the extraordinary thing that was happening to me.
+								An exquisite pleasure had invaded my senses, something isolated, detached, with no
+								suggestion of its origin.”
+							</blockquote>
+						</article>
+						<article>
+							<p class="sw-overline">Weaved Motifs</p>
+							<ol>
+								<li>
+									<h3>Sensory Resurrection</h3>
+									<p>The immediate bridge between physical stimulus and metaphysical realization.</p>
+								</li>
+								<li>
+									<h3>Isolated Transcendence</h3>
+									<p>The “extraordinary thing” as a self-contained entity outside of chronological time.</p>
+								</li>
+								<li>
+									<h3>Origin Obscurity</h3>
+									<p>The delight in the unknown genesis of the aesthetic experience.</p>
+								</li>
+							</ol>
+						</article>
+					</div>
+				</section>
+
+				<section class="sw-cta" aria-labelledby="sw-cta-title">
+					<img
+						src={withBase('/images/tools/semantic-weaver/cta-library.jpg')}
+						alt=""
+						width="1344"
+						height="280"
 						loading="lazy"
 						decoding="async"
 					/>
+					<div class="sw-cta__content">
+						<h2 id="sw-cta-title">Begin Your Analysis</h2>
+						<p>
+							The archive remains silent until questioned. Use the Semantic Weaver to find the voice hidden
+							within your research.
+						</p>
+						<a
+							href={semanticLaunchHref}
+							target={semanticLaunchExternal ? '_blank' : undefined}
+							rel={semanticLaunchExternal ? 'noreferrer' : undefined}
+						>
+							Launch Interactive Tool
+						</a>
+					</div>
+				</section>
+			</section>
+		) : (
+			<div class="article-detail tool-detail">
+				<div class="article-detail__scroll-track" aria-hidden="true">
+					<p>Reading</p>
 					<div>
-						<p>Maintained By</p>
-						<p>The Archive Workshop</p>
+						<span></span>
 					</div>
 				</div>
-				<div class="article-detail__actions tool-detail__footer-actions">
-					<a
-						href={primaryFooterAction.href}
-						target={primaryFooterAction.external ? '_blank' : undefined}
-						rel={primaryFooterAction.external ? 'noreferrer' : undefined}
-					>
-						{primaryFooterAction.label}
-					</a>
-					<a href={withBase('/tools/')}>Back to Tools</a>
-				</div>
-			</footer>
-		</section>
 
-		<section class="article-detail__recommended tool-detail__recommended">
-			<p>Related Instruments</p>
-			<div class="article-detail__recommended-grid tool-detail__recommended-grid">
-				{
-					relatedCards.map((card) => (
-						<article>
-							<a href={card.href}>
-								<figure class="tool-detail__related-icon">
-									<img src={card.icon} alt="" width="24" height="24" loading="lazy" decoding="async" />
-								</figure>
-								<p class="blog-meta">{card.category}</p>
-								<h3>{card.title}</h3>
+				<header class="article-detail__header">
+					<p class="article-detail__meta">
+						<span>{entry.data.category}</span>
+						<span aria-hidden="true">•</span>
+						<span>{formatDate(entry.data.publishedDate)}</span>
+					</p>
+					<h1>{entry.data.title}</h1>
+					<p class="article-detail__lede">{entry.data.description}</p>
+					<div class="tool-detail__action-row">
+						{
+							entry.data.externalUrl && (
+								<a class="button" href={entry.data.externalUrl} target="_blank" rel="noreferrer">
+									Open Tool
+								</a>
+							)
+						}
+						{
+							entry.data.repoUrl && (
+								<a class="button button-secondary" href={entry.data.repoUrl} target="_blank" rel="noreferrer">
+									View Source
+								</a>
+							)
+						}
+					</div>
+				</header>
+
+				<section class="article-detail__hero">
+					<figure>
+						<img
+							src={withBase('/images/tools/secondary-image.png')}
+							alt="Quiet workspace composition from the tools collection."
+							width="1104"
+							height="473"
+							loading="eager"
+							decoding="async"
+						/>
+					</figure>
+					<p>Collection render from The Cognitive Archive tools atelier</p>
+				</section>
+
+				<section class="article-detail__body">
+					<div class="tool-detail__quick-facts" aria-label="Tool metadata">
+						{
+							entry.data.version && (
+								<p>
+									<span>Version</span>
+									<strong>{entry.data.version}</strong>
+								</p>
+							)
+						}
+						<p>
+							<span>Status</span>
+							<strong>{statusLabelMap[entry.data.status]}</strong>
+						</p>
+						<p>
+							<span>Category</span>
+							<strong>{entry.data.category}</strong>
+						</p>
+						<p>
+							<span>Published</span>
+							<strong>{formatDate(entry.data.publishedDate)}</strong>
+						</p>
+					</div>
+
+					{
+						entry.data.tags.length > 0 && (
+							<ul class="tool-detail__tags" aria-label="Tool tags">
+								{entry.data.tags.map((tag) => <li>{tag}</li>)}
+							</ul>
+						)
+					}
+
+					<div class="article-detail__prose">
+						<Content />
+					</div>
+
+					<aside class="article-detail__quote">
+						<blockquote>
+							“Quiet instruments create room for careful thought before decisive action.”
+						</blockquote>
+						<p>— The Cognitive Archive Principle</p>
+					</aside>
+
+					<footer class="article-detail__author">
+						<div class="article-detail__author-meta">
+							<img
+								src={withBase('/images/blog/article-author.jpg')}
+								alt=""
+								width="48"
+								height="48"
+								loading="lazy"
+								decoding="async"
+							/>
+							<div>
+								<p>Maintained By</p>
+								<p>The Archive Workshop</p>
+							</div>
+						</div>
+						<div class="article-detail__actions tool-detail__footer-actions">
+							<a
+								href={primaryFooterAction.href}
+								target={primaryFooterAction.external ? '_blank' : undefined}
+								rel={primaryFooterAction.external ? 'noreferrer' : undefined}
+							>
+								{primaryFooterAction.label}
 							</a>
-						</article>
-					))
-				}
+							<a href={withBase('/tools/')}>Back to Tools</a>
+						</div>
+					</footer>
+				</section>
+
+				<section class="article-detail__recommended tool-detail__recommended">
+					<p>Related Instruments</p>
+					<div class="article-detail__recommended-grid tool-detail__recommended-grid">
+						{
+							relatedCards.map((card) => (
+								<article>
+									<a href={card.href}>
+										<figure class="tool-detail__related-icon">
+											<img src={card.icon} alt="" width="24" height="24" loading="lazy" decoding="async" />
+										</figure>
+										<p class="blog-meta">{card.category}</p>
+										<h3>{card.title}</h3>
+									</a>
+								</article>
+							))
+						}
+					</div>
+				</section>
 			</div>
-		</section>
-	</div>
+		)
+	}
 </Layout>

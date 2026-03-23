@@ -7,7 +7,7 @@ status: "live"
 version: "Public"
 icon: "icon-source.svg"
 featured: true
-externalUrl: "https://example.com/source-mapper"
+externalUrl: "#"
 repoUrl: "https://github.com/example/source-mapper"
 tags: ["citations", "graph", "research"]
 ---

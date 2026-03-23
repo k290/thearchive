@@ -7,7 +7,7 @@ status: "beta"
 version: "v. 1.0"
 icon: "icon-folio.svg"
 featured: true
-externalUrl: "https://example.com/folio-structurer"
+externalUrl: "#"
 repoUrl: "https://github.com/example/folio-structurer"
 tags: ["publishing", "curation", "layout"]
 ---

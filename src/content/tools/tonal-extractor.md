@@ -7,7 +7,7 @@ status: "beta"
 version: "Beta"
 icon: "icon-tonal.svg"
 featured: false
-externalUrl: "https://example.com/tonal-extractor"
+externalUrl: "#"
 repoUrl: "https://github.com/example/tonal-extractor"
 tags: ["color", "design", "tokens"]
 ---
