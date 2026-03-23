@@ -1,46 +1,116 @@
 ---
-import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 import { withBase } from '../../utils/withBase';
 
-const tools = (await getCollection('tools')).sort(
-	(a, b) => b.data.publishedDate.valueOf() - a.data.publishedDate.valueOf()
-);
+const toolsDirectoryCards = [
+	{
+		title: 'Semantic Weaver',
+		version: 'v. 2.4',
+		description:
+			'Extract thematic threads from expansive text collections using nuanced contextual analysis.',
+		icon: withBase('/images/tools/icon-semantic.svg')
+	},
+	{
+		title: 'Folio Structurer',
+		version: 'v. 1.0',
+		description:
+			'Organize disparate digital artifacts into cohesive, paginated narratives for publication.',
+		icon: withBase('/images/tools/icon-folio.svg')
+	},
+	{
+		title: 'Tonal Extractor',
+		version: 'Beta',
+		description:
+			'Translate visual atmospheres into structured hex systems and stylistic metadata.',
+		icon: withBase('/images/tools/icon-tonal.svg')
+	},
+	{
+		title: 'Metadata Vault',
+		version: 'v. 3.1',
+		description: 'A secure, immutable storage solution for sensitive research data and primary sources.',
+		icon: withBase('/images/tools/icon-metadata.svg')
+	},
+	{
+		title: 'Contextual Reader',
+		version: 'v. 0.9',
+		description: 'Distraction-free environment for analyzing deep-layered textual compositions.',
+		icon: withBase('/images/tools/icon-contextual.svg')
+	},
+	{
+		title: 'Source Mapper',
+		version: 'Public',
+		description: 'Visualize the interconnected web of citations and references within your library.',
+		icon: withBase('/images/tools/icon-source.svg')
+	}
+];
 ---
 
-<Layout title="Tools | My Website" description="Interactive tools and productized ideas.">
-	<section class="page-heading">
-		<p class="eyebrow">Builds</p>
-		<h1>Tools</h1>
-		<p>Publish a tool profile in `src/content/tools` to add it here.</p>
-	</section>
-
-	{
-		tools.length === 0 ? (
-			<p class="empty-state">No tools yet.</p>
-		) : (
-			<div class="stack-list">
-				{
-					tools.map((tool) => (
-						<article class="card">
-							<p class="meta">
-								<span class="status-pill">{tool.data.status}</span> {tool.data.category}
-							</p>
-							<h2>
-								<a href={withBase(`/tools/${tool.id}/`)}>{tool.data.title}</a>
-							</h2>
-							<p>{tool.data.description}</p>
-							{
-								tool.data.tags.length > 0 && (
-									<ul class="tag-list" aria-label="Tool tags">
-										{tool.data.tags.map((tag) => <li>{tag}</li>)}
-									</ul>
-								)
-							}
-						</article>
-					))
-				}
+<Layout
+	title="Tools | The Cognitive Archive"
+	description="A curated directory of quiet tools for deep archival work."
+>
+	<section class="tools-directory" aria-labelledby="tools-directory-title">
+		<header class="tools-directory__hero">
+			<div class="tools-directory__hero-heading">
+				<h1 id="tools-directory-title">
+					Instruments of <em>Curation</em>
+				</h1>
+				<p>
+					A selection of digital utilities designed for the modern archivist. Purposeful, silent, and
+					precise.
+				</p>
 			</div>
-		)
-	}
+			<div class="tools-directory__hero-meta" aria-hidden="true">
+				<span class="tools-directory__hero-rule"></span>
+				<p>Directory Vol. I</p>
+			</div>
+		</header>
+
+		<div class="tools-directory__grid" role="list" aria-label="Tools directory">
+			{
+				toolsDirectoryCards.map((card) => (
+					<article class="tools-directory__card" role="listitem">
+						<div class="tools-directory__card-head">
+							<span class="tools-directory__card-icon-shell">
+								<img src={card.icon} alt="" loading="lazy" />
+							</span>
+							<p class="tools-directory__card-version">{card.version}</p>
+						</div>
+						<h2>{card.title}</h2>
+						<p>{card.description}</p>
+						<button type="button" class="tools-directory__card-button">Open Tool</button>
+					</article>
+				))
+			}
+		</div>
+
+		<section class="tools-directory__manifesto" aria-label="Philosophical inquiry">
+			<figure class="tools-directory__manifesto-media">
+				<img
+					src={withBase('/images/tools/secondary-image.png')}
+					alt="A minimalist study with shadows, leaves, and curated desk objects."
+					loading="lazy"
+				/>
+			</figure>
+
+			<div class="tools-directory__manifesto-copy">
+				<p class="tools-directory__manifesto-label">Philosophical Inquiry</p>
+				<h2>
+					Why we build <em>quiet</em> technology.
+				</h2>
+				<p>
+					In an era of relentless notification and high-velocity consumption, we advocate for tools that
+					retreat into the background.
+				</p>
+				<p>
+					Our instruments do not demand attention; they wait for it. By prioritizing spatial hierarchy
+					and silent interactions, we allow the curator&apos;s mind to remain in a state of flow.
+				</p>
+				<div class="tools-directory__manifesto-cta" aria-hidden="true">
+					<span></span>
+					<p>Read the Manifesto</p>
+				</div>
+			</div>
+		</section>
+	</section>
 </Layout>
