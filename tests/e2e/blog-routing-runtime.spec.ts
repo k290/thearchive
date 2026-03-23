@@ -1,10 +1,10 @@
 import { expect, test } from '@playwright/test';
-import { createRuntimeErrorTracker } from './helpers';
+import { createRuntimeErrorTracker, gotoRoute } from './helpers';
 
 test('blog list entries navigate to detail pages without runtime errors', async ({ page }) => {
 	const runtime = createRuntimeErrorTracker(page);
 
-	const response = await page.goto('/blog/');
+	const response = await gotoRoute(page, '/blog/');
 	expect(response?.status()).toBeLessThan(400);
 
 	const detailLinks = await page.locator('.blog-feed a[href]').evaluateAll((anchors) => {
@@ -26,4 +26,3 @@ test('blog list entries navigate to detail pages without runtime errors', async 
 
 	runtime.assertNoErrors('blog listing to detail navigation');
 });
-

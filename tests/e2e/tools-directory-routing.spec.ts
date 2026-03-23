@@ -1,10 +1,10 @@
 import { expect, test } from '@playwright/test';
-import { createRuntimeErrorTracker } from './helpers';
+import { createRuntimeErrorTracker, gotoRoute } from './helpers';
 
 test('tools directory cards navigate to valid detail pages', async ({ page }) => {
 	const runtime = createRuntimeErrorTracker(page);
 
-	const response = await page.goto('/tools/');
+	const response = await gotoRoute(page, '/tools/');
 	expect(response?.status()).toBeLessThan(400);
 
 	const cardLinks = await page.locator('.tools-directory__card-button').evaluateAll((anchors) => {
@@ -24,4 +24,3 @@ test('tools directory cards navigate to valid detail pages', async ({ page }) =>
 
 	runtime.assertNoErrors('tools directory detail navigation');
 });
-

@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test';
-import { createRuntimeErrorTracker, expectAtRoute } from './helpers';
+import { createRuntimeErrorTracker, expectAtRoute, gotoRoute } from './helpers';
 
 const headerRoutes = [
 	{ label: 'Home', route: '/' },
@@ -17,19 +17,19 @@ const footerRoutes = [
 test('home renders and top-nav/footer links work', async ({ page }) => {
 	const runtime = createRuntimeErrorTracker(page);
 
-	const response = await page.goto('/');
+	const response = await gotoRoute(page, '/');
 	expect(response?.status()).toBeLessThan(400);
 	await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
 
 	for (const link of headerRoutes) {
-		await page.goto('/');
+		await gotoRoute(page, '/');
 		await page.getByRole('banner').getByRole('link', { name: link.label }).click();
 		expectAtRoute(page, link.route);
 		await expect(page.locator('h1').first()).toBeVisible();
 	}
 
 	for (const link of footerRoutes) {
-		await page.goto('/');
+		await gotoRoute(page, '/');
 		await page.getByRole('contentinfo').getByRole('link', { name: link.label }).click();
 		expectAtRoute(page, link.route);
 		await expect(page.locator('h1').first()).toBeVisible();
@@ -37,4 +37,3 @@ test('home renders and top-nav/footer links work', async ({ page }) => {
 
 	runtime.assertNoErrors('home/nav/footer flow');
 });
-
