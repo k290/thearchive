@@ -1,14 +1,127 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { withBase } from '../utils/withBase';
 ---
 
-<Layout title="About | The Cognitive Archive" description="About The Cognitive Archive and its editorial direction.">
-	<section class="page-heading">
-		<p class="eyebrow">About</p>
-		<h1>The Cognitive Archive</h1>
-		<p>
-			An editorial publication built around intentional interfaces, structured thinking, and long-form work with a
-			calm visual pace.
-		</p>
+<Layout title="About | The Cognitive Archive" description="Identity, principles, and collection architecture.">
+	<section class="about-figma" aria-labelledby="about-title">
+		<div class="about-figma__scroll-track" aria-hidden="true">
+			<span class="about-figma__scroll-progress"></span>
+		</div>
+
+		<header class="about-figma__masthead">
+			<div>
+				<p class="about-figma__eyebrow">Volume I — Identity</p>
+				<h1 id="about-title">
+					<span>THE</span>
+					<span>COGNITIVE</span>
+					<span>ARCHIVE</span>
+				</h1>
+			</div>
+		</header>
+
+		<section class="about-figma__mission" aria-label="Mission">
+			<div class="about-figma__mission-title">
+				<h2>The Mission</h2>
+			</div>
+			<div class="about-figma__mission-copy">
+				<p class="about-figma__mission-quote">
+					“To curate the silent intersections where the mechanics of thought meet the precision of the
+					machine.”
+				</p>
+				<p>
+					The Cognitive Archive serves as a digital repository for the synthesis of philosophy, psychology,
+					and emerging technologies. In an era of rapid digital expansion, we seek to preserve the
+					contemplative pace of the scholar while embracing the analytical power of the architect.
+				</p>
+				<p>
+					We believe that technology is not merely a tool, but an extension of the human psyche, a digital
+					mirror reflecting our oldest philosophical inquiries into the nature of consciousness, memory, and
+					agency.
+				</p>
+			</div>
+		</section>
+
+		<section class="about-figma__principles" aria-label="Founding principles">
+			<div class="about-figma__principles-inner">
+				<p class="about-figma__principles-eyebrow">Founding Principles</p>
+				<div class="about-figma__principles-grid">
+					<article>
+						<p class="about-figma__principle-index">01</p>
+						<h3>Epistemic Rigor</h3>
+						<p>
+							Every entry in our archive is subjected to the scrutiny of classical logic and modern
+							empirical standards. We value clarity over speed.
+						</p>
+					</article>
+					<article>
+						<p class="about-figma__principle-index">02</p>
+						<h3>Digital Craftsmanship</h3>
+						<p>
+							We treat interface design as a form of literature. Every pixel and interaction should
+							contribute to a state of focused contemplation.
+						</p>
+					</article>
+					<article>
+						<p class="about-figma__principle-index">03</p>
+						<h3>Temporal Balance</h3>
+						<p>
+							By anchoring cutting-edge technological shifts in perennial philosophy, we ensure our
+							insights remain relevant beyond the current cycle.
+						</p>
+					</article>
+				</div>
+			</div>
+		</section>
+
+		<section class="about-figma__collection" aria-label="Collection categories">
+			<figure>
+				<img
+					src={withBase('/images/about/about-collection-books.png')}
+					alt="Monochrome stack of books on a desk."
+					loading="lazy"
+					decoding="async"
+				/>
+			</figure>
+			<div class="about-figma__collection-copy">
+				<h2>The Collection</h2>
+				<p>Our collection is categorized into three primary domains of inquiry:</p>
+				<ul>
+					<li>
+						<span class="about-figma__collection-tag">CAT. A</span>
+						<div>
+							<h3>Technical Folios</h3>
+							<p>
+								In-depth analyses of neural networks, ethical AI frameworks, and cognitive computing
+								architectures.
+							</p>
+						</div>
+					</li>
+					<li>
+						<span class="about-figma__collection-tag">CAT. B</span>
+						<div>
+							<h3>Philosophical Treatises</h3>
+							<p>Essays exploring phenomenology in virtual spaces and the ontology of digital artifacts.</p>
+						</div>
+					</li>
+					<li>
+						<span class="about-figma__collection-tag">CAT. C</span>
+						<div>
+							<h3>Mental Instrumentation</h3>
+							<p>Curated tools designed to enhance human cognition through minimalist digital workflows.</p>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</section>
+
+		<section class="about-figma__discourse" aria-label="Discourse links">
+			<h2>Join the Discourse</h2>
+			<nav aria-label="About links">
+				<a href={withBase('/contact/')}>Correspondence</a>
+				<a href={withBase('/blog/')}>The Newsletter</a>
+				<a href={withBase('/contact/')}>Institutional Access</a>
+			</nav>
+		</section>
 	</section>
 </Layout>
