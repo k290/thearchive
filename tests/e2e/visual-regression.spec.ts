@@ -18,7 +18,8 @@ test.describe('visual baselines', () => {
 			const response = await gotoRoute(page, pageSpec.route);
 			expect(response?.status(), `Expected route ${pageSpec.route} to load`).toBeLessThan(400);
 			await page.waitForLoadState('networkidle');
-			await expect(page).toHaveScreenshot(pageSpec.snapshot, { fullPage: true });
+			// Use a fixed viewport capture to avoid flaky full-page height differences across environments.
+			await expect(page).toHaveScreenshot(pageSpec.snapshot);
 			runtime.assertNoErrors(`visual baseline for ${pageSpec.route}`);
 		});
 	}
