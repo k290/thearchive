@@ -1,43 +1,190 @@
 ---
 import { getCollection, render, type CollectionEntry } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
+import { withBase } from '../../utils/withBase';
+
+interface RecommendedCard {
+	href: string;
+	image: string;
+	meta: string;
+	title: string;
+}
 
 interface Props {
 	entry: CollectionEntry<'blog'>;
 }
 
+const formatDate = (value: Date) =>
+	value
+		.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' })
+		.toUpperCase();
+
 export async function getStaticPaths() {
-	const posts = await getCollection('blog', ({ data }) => !data.draft);
+	const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
+		(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+	);
 
 	return posts.map((entry) => ({
 		params: { slug: entry.id },
-		props: { entry }
+		props: {
+			entry
+		}
 	}));
 }
 
 const { entry } = Astro.props as Props;
 const { Content } = await render(entry);
+const primaryTag = entry.data.tags[0] ?? 'Archive';
+const recommendedEntries = (await getCollection('blog', ({ data }) => !data.draft))
+	.filter((candidate) => candidate.id !== entry.id)
+	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+	.slice(0, 2);
+
+const recommendedFallbacks: RecommendedCard[] = [
+	{
+		href: withBase('/blog/'),
+		image: withBase('/images/blog/recommended-minimalism.jpg'),
+		meta: 'Interiors',
+		title: 'The Curated Void: Japanese Minimalism in Small Spaces'
+	},
+	{
+		href: withBase('/blog/'),
+		image: withBase('/images/blog/recommended-paper.jpg'),
+		meta: 'Philosophy',
+		title: 'Tactile Memory: Why We Still Reach for Paper'
+	}
+];
+
+const recommendedCards: RecommendedCard[] = [0, 1].map((index) => {
+	const candidate = recommendedEntries[index];
+	if (!candidate) {
+		return recommendedFallbacks[index];
+	}
+
+	return {
+		href: withBase(`/blog/${candidate.id}/`),
+		image: recommendedFallbacks[index].image,
+		meta: candidate.data.tags[0] ?? 'Archive',
+		title: candidate.data.title
+	};
+});
 ---
 
-<Layout title={`${entry.data.title} | Blog`} description={entry.data.description}>
-	<article class="article">
-		<header class="article-header">
-			<p class="meta">
-				Published {entry.data.pubDate.toLocaleDateString()}
-				{entry.data.updatedDate && ` • Updated ${entry.data.updatedDate.toLocaleDateString()}`}
+<Layout title={`${entry.data.title} | The Cognitive Archive`} description={entry.data.description}>
+	<div class="article-detail">
+		<div class="article-detail__scroll-track" aria-hidden="true">
+			<p>Reading</p>
+			<div>
+				<span></span>
+			</div>
+		</div>
+
+		<header class="article-detail__header">
+			<p class="article-detail__meta">
+				<span>{primaryTag}</span>
+				<span aria-hidden="true">•</span>
+				<span>{formatDate(entry.data.pubDate)}</span>
 			</p>
 			<h1>{entry.data.title}</h1>
-			<p>{entry.data.description}</p>
-			{
-				entry.data.tags.length > 0 && (
-					<ul class="tag-list" aria-label="Post tags">
-						{entry.data.tags.map((tag) => <li>{tag}</li>)}
-					</ul>
-				)
-			}
+			<p class="article-detail__lede">{entry.data.description}</p>
 		</header>
-		<div class="prose">
-			<Content />
-		</div>
-	</article>
+
+		<section class="article-detail__hero">
+			<figure>
+				<img
+					src={withBase('/images/blog/article-hero-concrete.jpg')}
+					alt=""
+					width="1104"
+					height="473"
+					loading="eager"
+					decoding="async"
+				/>
+			</figure>
+			<p>Photography by Elias Voelker</p>
+		</section>
+
+		<section class="article-detail__body">
+			<div class="article-detail__prose">
+				<Content />
+			</div>
+
+			<aside class="article-detail__quote">
+				<blockquote>
+					“Concrete is the only material that captures the light as it was in the moment of its pouring, a
+					permanent record of a temporary state.”
+				</blockquote>
+				<p>— Louis Kahn, 1962</p>
+			</aside>
+
+			<h2>The Geometry of Shadow</h2>
+			<p class="article-detail__standfirst">
+				As sunlight traverses the rough texture of a board-marked wall, the building becomes a sundial. The deep
+				recessed windows, designed more for thermal regulation than for views, create dramatic pools of darkness
+				that define the interior rhythm.
+			</p>
+
+			<div class="article-detail__inline-grid">
+				<figure>
+					<img
+						src={withBase('/images/blog/article-inline-shadow.jpg')}
+						alt=""
+						width="296"
+						height="395"
+						loading="lazy"
+						decoding="async"
+					/>
+				</figure>
+				<p>
+					The interplay of light and void is not merely aesthetic; it is structural. Every shadow is a calculated
+					absence.
+				</p>
+			</div>
+
+			<p class="article-detail__closing">
+				When we look back at the archives of these structures, we find more than just blueprints. We find a
+				philosophy of permanence that challenges our contemporary era of disposable architecture. To build in
+				concrete is to commit to a century.
+			</p>
+
+			<footer class="article-detail__author">
+				<div class="article-detail__author-meta">
+					<img
+						src={withBase('/images/blog/article-author.jpg')}
+						alt=""
+						width="48"
+						height="48"
+						loading="lazy"
+						decoding="async"
+					/>
+					<div>
+						<p>Written By</p>
+						<p>Julian Thorne</p>
+					</div>
+				</div>
+				<div class="article-detail__actions">
+					<a href={withBase('/contact/')}>Share Folio</a>
+					<a href={withBase('/blog/')}>Download PDF</a>
+				</div>
+			</footer>
+		</section>
+
+		<section class="article-detail__recommended">
+			<p>Further Reading</p>
+			<div class="article-detail__recommended-grid">
+				{
+					recommendedCards.map((card) => (
+						<article>
+							<a href={card.href}>
+								<figure>
+									<img src={card.image} alt="" width="560" height="315" loading="lazy" decoding="async" />
+								</figure>
+								<p class="blog-meta">{card.meta}</p>
+								<h3>{card.title}</h3>
+							</a>
+						</article>
+					))
+				}
+			</div>
+		</section>
+	</div>
 </Layout>
