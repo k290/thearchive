@@ -7,11 +7,26 @@
   },
   "scripts": {
     "dev": "astro dev",
+    "check": "astro check",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "test": "npm run test:unit && npm run test:e2e",
+    "test:unit": "vitest run --passWithNoTests",
+    "test:unit:watch": "vitest",
+    "test:e2e": "playwright test --pass-with-no-tests",
+    "test:e2e:headed": "playwright test --headed --pass-with-no-tests",
+    "test:e2e:install": "playwright install --with-deps chromium"
   },
   "dependencies": {
     "astro": "^6.0.8"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.8",
+    "@axe-core/playwright": "^4.11.1",
+    "@playwright/test": "^1.58.2",
+    "@types/node": "^25.5.0",
+    "typescript": "^5.9.3",
+    "vitest": "^4.1.1"
   }
 }

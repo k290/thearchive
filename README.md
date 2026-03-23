@@ -71,5 +71,8 @@ Optional:
 
 - `npm install` install dependencies
 - `npm run dev` start local development server
+- `npm run check` run Astro type and `.astro` checks
+- `npm run test:unit` run Vitest unit/contract tests
+- `npm run test:e2e` run Playwright end-to-end tests
 - `npm run build` build static site into `dist/`
 - `npm run preview` preview production build locally
