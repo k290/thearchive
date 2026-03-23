@@ -1,13 +1,28 @@
 ---
 import { getCollection, render, type CollectionEntry } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
+import { withBase } from '../../utils/withBase';
+
+interface RelatedToolCard {
+	href: string;
+	title: string;
+	category: string;
+	icon: string;
+}
 
 interface Props {
 	entry: CollectionEntry<'tools'>;
 }
 
+const formatDate = (value: Date) =>
+	value
+		.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' })
+		.toUpperCase();
+
 export async function getStaticPaths() {
-	const tools = await getCollection('tools');
+	const tools = (await getCollection('tools')).sort(
+		(a, b) => b.data.publishedDate.valueOf() - a.data.publishedDate.valueOf()
+	);
 
 	return tools.map((entry) => ({
 		params: { slug: entry.id },
@@ -17,40 +32,194 @@ export async function getStaticPaths() {
 
 const { entry } = Astro.props as Props;
 const { Content } = await render(entry);
+const statusLabelMap: Record<CollectionEntry<'tools'>['data']['status'], string> = {
+	live: 'Live',
+	beta: 'Beta',
+	planned: 'Planned',
+	archived: 'Archived'
+};
+
+const iconByToolId: Record<string, string> = {
+	'campaign-message-tester': withBase('/images/tools/icon-semantic.svg'),
+	'legislation-tracker': withBase('/images/tools/icon-metadata.svg'),
+	'semantic-weaver': withBase('/images/tools/icon-semantic.svg'),
+	'folio-structurer': withBase('/images/tools/icon-folio.svg'),
+	'tonal-extractor': withBase('/images/tools/icon-tonal.svg'),
+	'metadata-vault': withBase('/images/tools/icon-metadata.svg'),
+	'contextual-reader': withBase('/images/tools/icon-contextual.svg'),
+	'source-mapper': withBase('/images/tools/icon-source.svg')
+};
+
+const relatedEntries = (await getCollection('tools'))
+	.filter((candidate) => candidate.id !== entry.id)
+	.sort((a, b) => b.data.publishedDate.valueOf() - a.data.publishedDate.valueOf())
+	.slice(0, 2);
+
+const relatedFallbacks: RelatedToolCard[] = [
+	{
+		href: withBase('/tools/'),
+		title: 'Contextual Reader',
+		category: 'Curation',
+		icon: withBase('/images/tools/icon-contextual.svg')
+	},
+	{
+		href: withBase('/tools/'),
+		title: 'Source Mapper',
+		category: 'Discovery',
+		icon: withBase('/images/tools/icon-source.svg')
+	}
+];
+
+const relatedCards: RelatedToolCard[] = [0, 1].map((index) => {
+	const candidate = relatedEntries[index];
+	if (!candidate) {
+		return relatedFallbacks[index];
+	}
+
+	return {
+		href: withBase(`/tools/${candidate.id}/`),
+		title: candidate.data.title,
+		category: candidate.data.category,
+		icon: iconByToolId[candidate.id] ?? withBase('/images/tools/icon-folio.svg')
+	};
+});
+
+const primaryFooterAction = entry.data.externalUrl
+	? { href: entry.data.externalUrl, label: 'Launch Tool', external: true }
+	: entry.data.repoUrl
+		? { href: entry.data.repoUrl, label: 'View Source', external: true }
+		: { href: withBase('/tools/'), label: 'Browse Tools', external: false };
 ---
 
-<Layout title={`${entry.data.title} | Tools`} description={entry.data.description}>
-	<article class="article">
-		<header class="article-header">
-			<p class="meta">
-				<span class="status-pill">{entry.data.status}</span> {entry.data.category}
+<Layout title={`${entry.data.title} | The Cognitive Archive`} description={entry.data.description}>
+	<div class="article-detail tool-detail">
+		<div class="article-detail__scroll-track" aria-hidden="true">
+			<p>Reading</p>
+			<div>
+				<span></span>
+			</div>
+		</div>
+
+		<header class="article-detail__header">
+			<p class="article-detail__meta">
+				<span>{entry.data.category}</span>
+				<span aria-hidden="true">•</span>
+				<span>{formatDate(entry.data.publishedDate)}</span>
 			</p>
 			<h1>{entry.data.title}</h1>
-			<p>{entry.data.description}</p>
-			<div class="action-row">
+			<p class="article-detail__lede">{entry.data.description}</p>
+			<div class="tool-detail__action-row">
 				{
 					entry.data.externalUrl && (
-						<a class="button" href={entry.data.externalUrl} target="_blank" rel="noreferrer">Live Tool</a>
+						<a class="button" href={entry.data.externalUrl} target="_blank" rel="noreferrer">
+							Open Tool
+						</a>
 					)
 				}
 				{
 					entry.data.repoUrl && (
 						<a class="button button-secondary" href={entry.data.repoUrl} target="_blank" rel="noreferrer">
-							Source Code
+							View Source
 						</a>
 					)
 				}
 			</div>
+		</header>
+
+		<section class="article-detail__hero">
+			<figure>
+				<img
+					src={withBase('/images/tools/secondary-image.png')}
+					alt="Quiet workspace composition from the tools collection."
+					width="1104"
+					height="473"
+					loading="eager"
+					decoding="async"
+				/>
+			</figure>
+			<p>Collection render from The Cognitive Archive tools atelier</p>
+		</section>
+
+		<section class="article-detail__body">
+			<div class="tool-detail__quick-facts" aria-label="Tool metadata">
+				<p>
+					<span>Status</span>
+					<strong>{statusLabelMap[entry.data.status]}</strong>
+				</p>
+				<p>
+					<span>Category</span>
+					<strong>{entry.data.category}</strong>
+				</p>
+				<p>
+					<span>Published</span>
+					<strong>{formatDate(entry.data.publishedDate)}</strong>
+				</p>
+			</div>
+
 			{
 				entry.data.tags.length > 0 && (
-					<ul class="tag-list" aria-label="Tool tags">
+					<ul class="tool-detail__tags" aria-label="Tool tags">
 						{entry.data.tags.map((tag) => <li>{tag}</li>)}
 					</ul>
 				)
 			}
-		</header>
-		<div class="prose">
-			<Content />
-		</div>
-	</article>
+
+			<div class="article-detail__prose">
+				<Content />
+			</div>
+
+			<aside class="article-detail__quote">
+				<blockquote>
+					“Quiet instruments create room for careful thought before decisive action.”
+				</blockquote>
+				<p>— The Cognitive Archive Principle</p>
+			</aside>
+
+			<footer class="article-detail__author">
+				<div class="article-detail__author-meta">
+					<img
+						src={withBase('/images/blog/article-author.jpg')}
+						alt=""
+						width="48"
+						height="48"
+						loading="lazy"
+						decoding="async"
+					/>
+					<div>
+						<p>Maintained By</p>
+						<p>The Archive Workshop</p>
+					</div>
+				</div>
+				<div class="article-detail__actions tool-detail__footer-actions">
+					<a
+						href={primaryFooterAction.href}
+						target={primaryFooterAction.external ? '_blank' : undefined}
+						rel={primaryFooterAction.external ? 'noreferrer' : undefined}
+					>
+						{primaryFooterAction.label}
+					</a>
+					<a href={withBase('/tools/')}>Back to Tools</a>
+				</div>
+			</footer>
+		</section>
+
+		<section class="article-detail__recommended tool-detail__recommended">
+			<p>Related Instruments</p>
+			<div class="article-detail__recommended-grid tool-detail__recommended-grid">
+				{
+					relatedCards.map((card) => (
+						<article>
+							<a href={card.href}>
+								<figure class="tool-detail__related-icon">
+									<img src={card.icon} alt="" width="24" height="24" loading="lazy" decoding="async" />
+								</figure>
+								<p class="blog-meta">{card.category}</p>
+								<h3>{card.title}</h3>
+							</a>
+						</article>
+					))
+				}
+			</div>
+		</section>
+	</div>
 </Layout>

@@ -5,6 +5,7 @@ import { withBase } from '../../utils/withBase';
 const toolsDirectoryCards = [
 	{
 		title: 'Semantic Weaver',
+		slug: 'semantic-weaver',
 		version: 'v. 2.4',
 		description:
 			'Extract thematic threads from expansive text collections using nuanced contextual analysis.',
@@ -12,6 +13,7 @@ const toolsDirectoryCards = [
 	},
 	{
 		title: 'Folio Structurer',
+		slug: 'folio-structurer',
 		version: 'v. 1.0',
 		description:
 			'Organize disparate digital artifacts into cohesive, paginated narratives for publication.',
@@ -19,6 +21,7 @@ const toolsDirectoryCards = [
 	},
 	{
 		title: 'Tonal Extractor',
+		slug: 'tonal-extractor',
 		version: 'Beta',
 		description:
 			'Translate visual atmospheres into structured hex systems and stylistic metadata.',
@@ -26,18 +29,21 @@ const toolsDirectoryCards = [
 	},
 	{
 		title: 'Metadata Vault',
+		slug: 'metadata-vault',
 		version: 'v. 3.1',
 		description: 'A secure, immutable storage solution for sensitive research data and primary sources.',
 		icon: withBase('/images/tools/icon-metadata.svg')
 	},
 	{
 		title: 'Contextual Reader',
+		slug: 'contextual-reader',
 		version: 'v. 0.9',
 		description: 'Distraction-free environment for analyzing deep-layered textual compositions.',
 		icon: withBase('/images/tools/icon-contextual.svg')
 	},
 	{
 		title: 'Source Mapper',
+		slug: 'source-mapper',
 		version: 'Public',
 		description: 'Visualize the interconnected web of citations and references within your library.',
 		icon: withBase('/images/tools/icon-source.svg')
@@ -78,7 +84,7 @@ const toolsDirectoryCards = [
 						</div>
 						<h2>{card.title}</h2>
 						<p>{card.description}</p>
-						<button type="button" class="tools-directory__card-button">Open Tool</button>
+						<a href={withBase(`/tools/${card.slug}/`)} class="tools-directory__card-button">Open Tool</a>
 					</article>
 				))
 			}
