@@ -42,9 +42,6 @@ jobs:
       - name: Install Playwright browser
         run: npm run test:e2e:install
 
-      - name: Build site
-        run: npm run build
-
       - name: Set Playwright base-path values
         run: |
           if [ "${{ github.event.repository.name }}" = "${{ github.repository_owner }}.github.io" ]; then
@@ -54,6 +51,11 @@ jobs:
             echo "PW_BASE_PATH=/${{ github.event.repository.name }}/" >> "$GITHUB_ENV"
             echo "PW_BASE_URL=http://127.0.0.1:4321/${{ github.event.repository.name }}/" >> "$GITHUB_ENV"
           fi
+
+      - name: Build site
+        run: npm run build
+        env:
+          BASE: ${{ env.PW_BASE_PATH }}
 
       - name: End-to-end tests (Playwright)
         run: npm run test:e2e
