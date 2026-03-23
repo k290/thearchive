@@ -3,42 +3,186 @@ import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 import { withBase } from '../../utils/withBase';
 
+interface ArchiveCard {
+	description: string;
+	href: string;
+	meta: string;
+	title: string;
+}
+
 const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
 	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 );
+
+const formatDate = (value: Date) =>
+	value
+		.toLocaleDateString('en-US', { day: '2-digit', month: 'short', year: 'numeric' })
+		.toUpperCase();
+
+const toCard = (post: (typeof posts)[number]): ArchiveCard => {
+	const category = post.data.tags[0] ?? 'Archive';
+	return {
+		description: post.data.description,
+		href: withBase(`/blog/${post.id}/`),
+		meta: `${category} • ${formatDate(post.data.pubDate)}`,
+		title: post.data.title
+	};
+};
+
+const featuredCard: ArchiveCard = posts[0]
+	? toCard(posts[0])
+	: {
+			description: 'No published entries yet. Add markdown files to begin populating the archive.',
+			href: withBase('/blog/'),
+			meta: 'Archive • Awaiting Publication',
+			title: 'The Archive Is Being Prepared'
+		};
+
+const secondaryCard: ArchiveCard = posts[1]
+	? toCard(posts[1])
+	: {
+			description: 'The secondary stream will appear as more entries are published.',
+			href: withBase('/blog/'),
+			meta: 'Technical • Awaiting Publication',
+			title: 'Editorial Sequence In Progress'
+		};
+
+const compactCards: ArchiveCard[] = [
+	...posts.slice(2, 5).map(toCard),
+	{
+		description: 'The philosophy of digital archival in an age of ephemeral content and temporary social platforms.',
+		href: withBase('/blog/'),
+		meta: 'Culture • Sept 28, 2023',
+		title: 'Curating the Digital Self'
+	},
+	{
+		description: 'An aesthetic analysis of code-centric typography and its influence on modern publication design.',
+		href: withBase('/blog/'),
+		meta: 'Technical • Sept 15, 2023',
+		title: 'Monospace and Meaning'
+	},
+	{
+		description: 'How high-contrast serifs evoke the sensation of ink on heavy-weight stationery in a digital medium.',
+		href: withBase('/blog/'),
+		meta: 'Aesthetics • August 30, 2023',
+		title: 'The Materiality of Type'
+	}
+].slice(0, 3);
 ---
 
-<Layout title="Blog | My Website" description="Posts and writing collected in one place.">
-	<section class="page-heading">
-		<p class="eyebrow">Writing</p>
-		<h1>Blog</h1>
-		<p>Publish markdown posts in `src/content/blog` and they appear here automatically.</p>
-	</section>
+<Layout
+	title="Blog | The Cognitive Archive"
+	description="Collected Thoughts & Inquiries from The Cognitive Archive."
+>
+	<div class="blog-feed">
+		<section class="blog-feed__header">
+			<div class="blog-feed__intro">
+				<h1>
+					<span>Collected</span>
+					<span class="is-italic">Thoughts &amp; Inquiries</span>
+				</h1>
+				<p>
+					A curated repository of intellectual explorations, spanning the intersection of human psychology and
+					technical precision.
+				</p>
+			</div>
+			<nav class="blog-feed__filters" aria-label="Archive categories">
+				<a class="is-active" href={withBase('/blog/')}>All Archive</a>
+				<a href={withBase('/blog/')}>Psychology</a>
+				<a href={withBase('/blog/')}>Technical</a>
+				<a href={withBase('/blog/')}>Culture</a>
+				<a href={withBase('/blog/')}>Aesthetics</a>
+			</nav>
+		</section>
 
-	{
-		posts.length === 0 ? (
-			<p class="empty-state">No posts yet.</p>
-		) : (
-			<div class="stack-list">
+		<section class="blog-feed__grid">
+			<article class="blog-featured">
+				<figure class="blog-featured__image">
+					<img
+						src={withBase('/images/blog/featured-library.jpg')}
+						alt=""
+						width="773"
+						height="435"
+						loading="eager"
+						decoding="async"
+					/>
+				</figure>
+				<div class="blog-featured__content">
+					<p class="blog-meta">{featuredCard.meta}</p>
+					<h2>
+						<a href={featuredCard.href}>{featuredCard.title}</a>
+					</h2>
+					<p>{featuredCard.description}</p>
+				</div>
+			</article>
+
+			<article class="blog-secondary">
+				<figure class="blog-secondary__image">
+					<img
+						src={withBase('/images/blog/secondary-hardware.jpg')}
+						alt=""
+						width="363"
+						height="363"
+						loading="lazy"
+						decoding="async"
+					/>
+				</figure>
+				<p class="blog-meta">{secondaryCard.meta}</p>
+				<h3>
+					<a href={secondaryCard.href}>{secondaryCard.title}</a>
+				</h3>
+				<p>{secondaryCard.description}</p>
+			</article>
+
+			<div class="blog-compact-row">
 				{
-					posts.map((post) => (
-						<article class="card">
-							<p class="meta">{post.data.pubDate.toLocaleDateString()}</p>
-							<h2>
-								<a href={withBase(`/blog/${post.id}/`)}>{post.data.title}</a>
-							</h2>
-							<p>{post.data.description}</p>
-							{
-								post.data.tags.length > 0 && (
-									<ul class="tag-list" aria-label="Post tags">
-										{post.data.tags.map((tag) => <li>{tag}</li>)}
-									</ul>
-								)
-							}
+					compactCards.map((card) => (
+						<article class="blog-compact">
+							<p class="blog-meta">{card.meta}</p>
+							<h3>
+								<a href={card.href}>{card.title}</a>
+							</h3>
+							<p>{card.description}</p>
 						</article>
 					))
 				}
 			</div>
-		)
-	}
+
+			<article class="blog-manifesto">
+				<figure class="blog-manifesto__image">
+					<img
+						src={withBase('/images/blog/wide-inset-study.jpg')}
+						alt=""
+						width="363"
+						height="453"
+						loading="lazy"
+						decoding="async"
+					/>
+				</figure>
+				<div class="blog-manifesto__content">
+					<p class="blog-meta">Special Feature • August 12, 2023</p>
+					<h3>
+						“We do not build screens; we compose folios.”
+					</h3>
+					<p>
+						A manifesto on the founding principles of THE COGNITIVE ARCHIVE and the rejection of high-density UI
+						patterns in favor of editorial pace.
+					</p>
+					<a href={withBase('/about/')}>Read Manifesto <span aria-hidden="true">-></span></a>
+				</div>
+			</article>
+		</section>
+
+		<nav class="blog-pagination" aria-label="Pagination">
+			<span>Previous</span>
+			<span>
+				<strong>01</strong> / 08
+			</span>
+			<span>Next Page</span>
+		</nav>
+
+		<div class="blog-scroll-track" aria-hidden="true">
+			<span></span>
+		</div>
+	</div>
 </Layout>
