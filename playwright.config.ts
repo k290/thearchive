@@ -1,6 +1,9 @@
 import { defineConfig, devices } from '@playwright/test';
 
 const isCI = Boolean(process.env.CI);
+const isPullRequestCI = process.env.GITHUB_EVENT_NAME === 'pull_request';
+const usePreviewServer = process.env.PLAYWRIGHT_USE_PREVIEW === 'true';
+const ciRetries = isPullRequestCI ? 1 : 2;
 const normalizedBasePath = (() => {
 	const basePath = process.env.PLAYWRIGHT_BASE_PATH ?? '/';
 	if (basePath === '/') {
@@ -16,7 +19,7 @@ export default defineConfig({
 	snapshotPathTemplate: '{testDir}/__screenshots__/{testFilePath}/{arg}{ext}',
 	fullyParallel: false,
 	forbidOnly: isCI,
-	retries: isCI ? 2 : 0,
+	retries: isCI ? ciRetries : 0,
 	workers: isCI ? 1 : undefined,
 	reporter: isCI ? [['github'], ['html', { open: 'never' }]] : [['list'], ['html', { open: 'never' }]],
 	expect: {
@@ -41,7 +44,9 @@ export default defineConfig({
 		}
 	],
 	webServer: {
-		command: 'npm run dev -- --host 127.0.0.1 --port 4321',
+		command: usePreviewServer
+			? 'npm run preview -- --host 127.0.0.1 --port 4321'
+			: 'npm run dev -- --host 127.0.0.1 --port 4321',
 		url: baseURL,
 		reuseExistingServer: !isCI,
 		env: {

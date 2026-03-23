@@ -30,8 +30,20 @@ jobs:
       - name: Unit and contract tests (Vitest)
         run: npm run test:unit
 
+      - name: Cache Playwright browsers
+        id: playwright-cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-playwright-
+
       - name: Install Playwright browser
         run: npm run test:e2e:install
+
+      - name: Build site
+        run: npm run build
 
       - name: Set Playwright base-path values
         run: |
@@ -48,9 +60,7 @@ jobs:
         env:
           PLAYWRIGHT_BASE_PATH: ${{ env.PW_BASE_PATH }}
           PLAYWRIGHT_BASE_URL: ${{ env.PW_BASE_URL }}
-
-      - name: Build site
-        run: npm run build
+          PLAYWRIGHT_USE_PREVIEW: 'true'
 
       - name: Upload Playwright report
         if: failure()
