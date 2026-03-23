@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
+import { withBase } from '../../utils/withBase';
 
 const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
 	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
@@ -24,7 +25,7 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
 						<article class="card">
 							<p class="meta">{post.data.pubDate.toLocaleDateString()}</p>
 							<h2>
-								<a href={`/blog/${post.id}/`}>{post.data.title}</a>
+								<a href={withBase(`/blog/${post.id}/`)}>{post.data.title}</a>
 							</h2>
 							<p>{post.data.description}</p>
 							{

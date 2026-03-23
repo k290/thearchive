@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { withBase } from '../utils/withBase';
 ---
 
 <Layout
@@ -19,13 +20,13 @@ import Layout from '../layouts/Layout.astro';
 					psychology, and the velocity of technology.
 				</p>
 				<div class="home-hero__actions">
-					<a class="button" href="/blog/">Begin Exploration</a>
+					<a class="button" href={withBase('/blog/')}>Begin Exploration</a>
 					<div class="home-hero__divider" aria-hidden="true"></div>
 				</div>
 			</div>
 			<figure class="home-hero__figure">
 				<img
-					src="/images/home/hero-book.jpg"
+					src={withBase('/images/home/hero-book.jpg')}
 					alt=""
 					width="427"
 					height="427"
@@ -46,7 +47,7 @@ import Layout from '../layouts/Layout.astro';
 			<article class="home-features__primary">
 				<figure class="home-features__primary-image">
 					<img
-						src="/images/home/feature-philosophy.jpg"
+						src={withBase('/images/home/feature-philosophy.jpg')}
 						alt=""
 						width="664"
 						height="415"
@@ -60,10 +61,10 @@ import Layout from '../layouts/Layout.astro';
 						<p>01.04.24</p>
 					</div>
 					<h2>
-						<a href="/blog/">The Stoic Response to the Digital Acceleration</a>
+						<a href={withBase('/blog/')}>The Stoic Response to the Digital Acceleration</a>
 					</h2>
 					<p>How ancient stillness provides the ultimate tool for navigating the relentless stream of modern information.</p>
-					<a class="home-features__link" href="/blog/">Read Folio</a>
+					<a class="home-features__link" href={withBase('/blog/')}>Read Folio</a>
 				</div>
 			</article>
 
@@ -71,7 +72,7 @@ import Layout from '../layouts/Layout.astro';
 				<article class="home-features__secondary">
 					<figure class="home-features__secondary-image">
 						<img
-							src="/images/home/feature-technology.jpg"
+							src={withBase('/images/home/feature-technology.jpg')}
 							alt=""
 							width="456"
 							height="456"
@@ -81,7 +82,7 @@ import Layout from '../layouts/Layout.astro';
 					</figure>
 					<p class="home-features__meta">Technology</p>
 					<h3>
-						<a href="/blog/">Ethics of Autonomous Intelligence</a>
+						<a href={withBase('/blog/')}>Ethics of Autonomous Intelligence</a>
 					</h3>
 					<div class="home-features__secondary-divider" aria-hidden="true"></div>
 				</article>
@@ -89,12 +90,12 @@ import Layout from '../layouts/Layout.astro';
 				<article class="home-features__tool">
 					<p class="home-features__meta">Tools</p>
 					<h3>
-						<a href="/tools/">The Cognitive Workbench</a>
+						<a href={withBase('/tools/')}>The Cognitive Workbench</a>
 					</h3>
 					<p>A repository of mental models and frameworks for structural thinking in an unstructured world.</p>
 					<div class="home-features__tool-footer">
-						<img src="/images/home/repository-mark.svg" alt="" width="13" height="22" loading="lazy" />
-						<a href="/tools/">Access Repository</a>
+						<img src={withBase('/images/home/repository-mark.svg')} alt="" width="13" height="22" loading="lazy" />
+						<a href={withBase('/tools/')}>Access Repository</a>
 					</div>
 				</article>
 			</div>
@@ -128,7 +129,7 @@ import Layout from '../layouts/Layout.astro';
 				</div>
 				<figure class="home-psychology__figure">
 					<img
-						src="/images/home/psychology-light.jpg"
+						src={withBase('/images/home/psychology-light.jpg')}
 						alt=""
 						width="512"
 						height="544"

@@ -1,4 +1,6 @@
 ---
+import { withBase } from '../utils/withBase';
+
 interface NavItem {
 	href: string;
 	label: string;
@@ -23,11 +25,11 @@ const isActive = (href: string) =>
 
 <header class="site-header">
 	<div class="site-header__inner">
-		<a class="site-header__brand" href="/">THE ARCHIVE</a>
+		<a class="site-header__brand" href={withBase('/')}>THE ARCHIVE</a>
 		<nav class="site-header__nav" aria-label="Primary">
 			{
 				navItems.map((item) => (
-					<a class:list={['site-header__link', isActive(item.href) && 'is-active']} href={item.href}>
+					<a class:list={['site-header__link', isActive(item.href) && 'is-active']} href={withBase(item.href)}>
 						{item.label}
 					</a>
 				))
@@ -35,10 +37,10 @@ const isActive = (href: string) =>
 		</nav>
 		<div class="site-header__utilities" aria-label="Site actions">
 			<button class="site-header__icon-button" type="button" aria-label="Search">
-				<img src="/icons/nav-search.svg" alt="" width="17" height="17" loading="lazy" />
+				<img src={withBase('/icons/nav-search.svg')} alt="" width="17" height="17" loading="lazy" />
 			</button>
 			<button class="site-header__icon-button" type="button" aria-label="Profile">
-				<img src="/icons/nav-profile.svg" alt="" width="19" height="19" loading="lazy" />
+				<img src={withBase('/icons/nav-profile.svg')} alt="" width="19" height="19" loading="lazy" />
 			</button>
 		</div>
 	</div>
