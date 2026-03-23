@@ -79,3 +79,17 @@ Optional:
 - `npm run test:e2e:responsive` run responsive layout matrix tests
 - `npm run build` build static site into `dist/`
 - `npm run preview` preview production build locally
+
+## CI and Branch Protection
+
+- Main CI workflow file: `.github/workflows/ci.yml`
+- Required check to enforce in GitHub branch protection: `quality` (job name)
+
+### Snapshot Discipline
+
+When UI changes are intentional:
+
+1. Run `npm run test:e2e:update-snapshots`
+2. Review image diffs in `tests/e2e/__screenshots__/`
+3. Commit updated snapshots in the same PR
+4. Confirm `npm run test:e2e:visual` passes
