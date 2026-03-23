@@ -1,5 +1,7 @@
 ---
 import '../styles/site.css';
+import SiteFooter from '../components/SiteFooter.astro';
+import SiteHeader from '../components/SiteHeader.astro';
 
 interface Props {
 	title?: string;
@@ -7,16 +9,11 @@ interface Props {
 }
 
 const {
-	title = 'My Website',
-	description = 'A focused space for writing and publishing useful tools.'
+	title = 'The Archive',
+	description = 'A curated archive of essays and tools.'
 } = Astro.props;
 
 const pathname = Astro.url.pathname;
-const navItems = [
-	{ href: '/', label: 'Home' },
-	{ href: '/blog/', label: 'Blog' },
-	{ href: '/tools/', label: 'Tools' }
-];
 ---
 
 <!doctype html>
@@ -29,7 +26,7 @@ const navItems = [
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		<link
-			href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Manrope:wght@400;500;700&display=swap"
+			href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,400i&family=Noto+Serif:ital,wght@0,300;0,400;1,300;1,400&family=Work+Sans:wght@400;500&display=swap"
 			rel="stylesheet"
 		/>
 		<meta name="description" content={description} />
@@ -37,35 +34,10 @@ const navItems = [
 		<title>{title}</title>
 	</head>
 	<body>
-		<div class="site-background" aria-hidden="true"></div>
-		<header class="site-header">
-			<div class="container header-inner">
-				<a class="brand" href="/">My Website</a>
-				<nav class="main-nav" aria-label="Primary">
-					{
-						navItems.map((item) => (
-							<a
-								href={item.href}
-								class:list={[
-									'nav-link',
-									(pathname === item.href || (item.href !== '/' && pathname.startsWith(item.href))) &&
-										'is-active'
-								]}
-							>
-								{item.label}
-							</a>
-						))
-					}
-				</nav>
-			</div>
-		</header>
-		<main class="container page-content">
+		<SiteHeader pathname={pathname} />
+		<main class="page-main">
 			<slot />
 		</main>
-		<footer class="site-footer">
-			<div class="container">
-				<p>Built with Astro. Ready for custom Figma-driven UI implementation.</p>
-			</div>
-		</footer>
+		<SiteFooter />
 	</body>
 </html>

@@ -1,0 +1,23 @@
+---
+const legalLinks = [
+	{ href: '/privacy/', label: 'Privacy Policy' },
+	{ href: '/terms/', label: 'Terms of Service' },
+	{ href: '/contact/', label: 'Contact' }
+];
+---
+
+<footer class="site-footer">
+	<div class="site-footer__inner">
+		<a class="site-footer__brand" href="/">THE ARCHIVE</a>
+		<nav class="site-footer__links" aria-label="Legal">
+			{
+				legalLinks.map((item) => (
+					<a class="site-footer__link" href={item.href}>
+						{item.label}
+					</a>
+				))
+			}
+		</nav>
+		<p class="site-footer__copyright">© 2024 THE ARCHIVE. CURATED WITH INTENT.</p>
+	</div>
+</footer>
