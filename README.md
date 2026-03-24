@@ -80,6 +80,10 @@ Optional:
 - `npm run build` build static site into `dist/`
 - `npm run preview` preview production build locally
 
+## Design Workflow
+
+- [Figma hardening pass checklist](docs/figma-hardening-pass.md)
+
 ## CI and Branch Protection
 
 - Main CI workflow file: `.github/workflows/ci.yml`
