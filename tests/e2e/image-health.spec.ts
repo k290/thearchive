@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test';
-import { createRuntimeErrorTracker, isLikelyInternalPath } from './helpers';
+import { createRuntimeErrorTracker, gotoRoute, isLikelyInternalPath } from './helpers';
 
 test('no broken images on primary routes', async ({ page, request }) => {
 	const runtime = createRuntimeErrorTracker(page);
@@ -7,7 +7,7 @@ test('no broken images on primary routes', async ({ page, request }) => {
 	const imageSources = new Set<string>();
 
 	for (const route of primaryRoutes) {
-		const response = await page.goto(route);
+		const response = await gotoRoute(page, route);
 		expect(response?.status(), `Expected route ${route} to load`).toBeLessThan(400);
 
 		const routeImageSources = await page.locator('img[src]').evaluateAll((images) =>
@@ -36,4 +36,3 @@ test('no broken images on primary routes', async ({ page, request }) => {
 
 	runtime.assertNoErrors('image health checks');
 });
-

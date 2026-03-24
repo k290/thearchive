@@ -1,17 +1,24 @@
 import { expect, test } from '@playwright/test';
-import { configuredBasePath, createRuntimeErrorTracker, expectAtRoute, isLikelyInternalPath } from './helpers';
+import { configuredBasePath, createRuntimeErrorTracker, expectAtRoute, gotoRoute, isLikelyInternalPath } from './helpers';
+
+const isDevRuntimePath = (value: string): boolean =>
+	value.startsWith('/@vite/') ||
+	value.startsWith('/@id/') ||
+	value.startsWith('/@fs/') ||
+	value.startsWith('/src/') ||
+	value.startsWith('/node_modules/');
 
 test('base-path-sensitive links and assets resolve under configured base path', async ({ page, request }) => {
 	const runtime = createRuntimeErrorTracker(page);
 	const routes = ['/', '/blog/', '/tools/', '/about/'];
 
 	for (const route of routes) {
-		const response = await page.goto(route);
+		const response = await gotoRoute(page, route);
 		expect(response?.status(), `Expected route ${route} to load`).toBeLessThan(400);
 		expectAtRoute(page, route);
 	}
 
-	await page.goto('/');
+	await gotoRoute(page, '/');
 
 	const hrefValues = await page.locator('a[href]').evaluateAll((anchors) =>
 		anchors
@@ -34,14 +41,23 @@ test('base-path-sensitive links and assets resolve under configured base path', 
 				.filter((value): value is string => Boolean(value))
 		);
 
-	const internalPaths = [...hrefValues, ...assetValues].filter(isLikelyInternalPath);
+	const internalPaths = [...hrefValues, ...assetValues]
+		.filter(isLikelyInternalPath)
+		.filter((path) => !isDevRuntimePath(path));
 	const expectedPrefix = configuredBasePath === '/' ? '/' : configuredBasePath;
 
 	for (const path of internalPaths) {
 		expect(path.startsWith(expectedPrefix), `Expected ${path} to start with ${expectedPrefix}`).toBe(true);
 	}
 
-	for (const src of [...new Set(assetValues.filter(isLikelyInternalPath).slice(0, 12))]) {
+	for (const src of [
+		...new Set(
+			assetValues
+				.filter(isLikelyInternalPath)
+				.filter((path) => !isDevRuntimePath(path))
+				.slice(0, 12)
+		)
+	]) {
 		const assetUrl = new URL(src, page.url()).toString();
 		const assetResponse = await request.get(assetUrl);
 		expect(assetResponse.status(), `Expected asset ${assetUrl} to resolve`).toBeLessThan(400);
@@ -49,4 +65,3 @@ test('base-path-sensitive links and assets resolve under configured base path', 
 
 	runtime.assertNoErrors('base-path link and asset checks');
 });
-

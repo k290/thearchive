@@ -10,7 +10,7 @@ const normalizeBasePath = (rawPath: string): string => {
 
 export const configuredBasePath = normalizeBasePath(process.env.PLAYWRIGHT_BASE_PATH ?? '/');
 
-const normalizeRoute = (route: string): string => {
+export const resolveRoute = (route: string): string => {
 	if (route === '/') {
 		return configuredBasePath;
 	}
@@ -19,8 +19,10 @@ const normalizeRoute = (route: string): string => {
 	return `${configuredBasePath}${normalizedRoute}`.replace(/\/{2,}/g, '/');
 };
 
+export const gotoRoute = (page: Page, route: string) => page.goto(resolveRoute(route));
+
 export const expectAtRoute = (page: Page, route: string): void => {
-	const expectedPath = normalizeRoute(route);
+	const expectedPath = resolveRoute(route);
 	const actualPath = new URL(page.url()).pathname;
 	expect(actualPath, `Expected route ${route} to resolve with base path ${configuredBasePath}`).toBe(expectedPath);
 };

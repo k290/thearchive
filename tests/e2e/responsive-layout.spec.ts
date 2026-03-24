@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test';
-import { createRuntimeErrorTracker } from './helpers';
+import { createRuntimeErrorTracker, gotoRoute } from './helpers';
 
 const viewports = [
 	{ label: 'desktop', size: { width: 1440, height: 900 } },
@@ -22,7 +22,7 @@ test.describe('responsive layout matrix', () => {
 			await page.setViewportSize(viewport.size);
 
 			for (const routeCheck of routeChecks) {
-				const response = await page.goto(routeCheck.route);
+				const response = await gotoRoute(page, routeCheck.route);
 				expect(response?.status(), `Expected route ${routeCheck.route} to load`).toBeLessThan(400);
 				await expect(page.locator(routeCheck.selector)).toBeVisible();
 
