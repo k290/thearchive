@@ -1321,13 +1321,13 @@ img {
 
 .tools-directory__manifesto-media img {
 	height: 100%;
-	left: -12.5%;
+	inset: 0;
 	mix-blend-mode: multiply;
 	object-fit: cover;
+	object-position: 50% 50%;
 	opacity: 0.8;
 	position: absolute;
-	top: 0;
-	width: 125%;
+	width: 100%;
 }
 
 .tools-directory__manifesto-copy {
