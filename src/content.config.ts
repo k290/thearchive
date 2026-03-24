@@ -1,5 +1,6 @@
 import { glob } from 'astro/loaders';
-import { defineCollection, z } from 'astro:content';
+import { defineCollection } from 'astro:content';
+import { z } from 'astro/zod';
 
 const blog = defineCollection({
 	loader: glob({ base: './src/content/blog', pattern: '**/*.{md,mdx}' }),
@@ -25,8 +26,8 @@ const tools = defineCollection({
 		version: z.string().optional(),
 		icon: z.string().optional(),
 		featured: z.boolean().default(false),
-		externalUrl: z.union([z.string().url(), z.literal('#')]).optional(),
-		repoUrl: z.string().url().optional(),
+		externalUrl: z.union([z.url(), z.literal('#')]).optional(),
+		repoUrl: z.url().optional(),
 		tags: z.array(z.string()).default([])
 	})
 });
